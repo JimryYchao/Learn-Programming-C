@@ -1,0 +1,5 @@
+﻿  _Program.c
+D:\JCWork\_Learn_\_Program Language_\_C_\_02_C 语言标准库\C Scripts\src\_Program.c(16,6): warning C4013: “Func”未定义；假设外部返回 int
+  t.c
+  正在生成代码...
+  C Scripts.vcxproj -> D:\JCWork\_Learn_\_Program Language_\_C_\_02_C 语言标准库\C Scripts\x64\Debug\C Scripts.exe

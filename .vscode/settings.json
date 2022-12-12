@@ -1,0 +1,32 @@
+{
+	"files.associations": {
+		"*.md": "markdown",
+		"stdatomic.h": "c",
+		"stdio.h": "c",
+		"threadpoollegacyapiset.h": "c",
+		"*.tcc": "c",
+		"system_error": "c",
+		"fstream": "c",
+		"istream": "c",
+		"limits": "c",
+		"new": "c",
+		"ostream": "c",
+		"ratio": "c",
+		"stdexcept": "c",
+		"streambuf": "c",
+		"vector": "cpp",
+		"stdbool.h": "c",
+		"_adt_.h": "c",
+		"sqlist.h": "c",
+		"array": "cpp",
+		"string": "cpp",
+		"string_view": "cpp",
+		"float.h": "c",
+		"stdlib.h": "c",
+		"limits.h": "c",
+		"h.h": "c",
+		"linkedlist.h": "c",
+		"assert.h": "c",
+		"math.h": "c"
+	}
+}
