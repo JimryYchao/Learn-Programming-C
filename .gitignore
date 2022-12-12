@@ -1,0 +1,6 @@
+
+# C EXE
+*.exe
+
+# C test scripts
+[Tt]estSrc/
