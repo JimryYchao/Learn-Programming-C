@@ -27,6 +27,17 @@
 		"h.h": "c",
 		"linkedlist.h": "c",
 		"assert.h": "c",
-		"math.h": "c"
+		"math.h": "c",
+		"pthread.h": "c",
+		"atomic": "c",
+		"chrono": "c",
+		"algorithm": "c",
+		"optional": "c",
+		"cmath": "c",
+		"tuple": "c",
+		"type_traits": "c",
+		"ctype.h": "c",
+		"crtdefs.h": "c",
+		"t_assert.h": "c"
 	}
 }
