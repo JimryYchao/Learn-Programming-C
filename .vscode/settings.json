@@ -38,6 +38,22 @@
 		"type_traits": "c",
 		"ctype.h": "c",
 		"crtdefs.h": "c",
-		"t_assert.h": "c"
+		"t_assert.h": "c",
+		"cerrno": "c",
+		"thread": "c",
+		"_errno.h": "c",
+		"errno.h": "c",
+		"complex": "c",
+		"xmath.h": "c",
+		"_math.h": "c",
+		"functional": "c",
+		"string.h": "c",
+		"cctype": "cpp",
+		"*.def": "cpp",
+		"clocale": "c",
+		"ccomplex": "cpp",
+		"lib-macros.h": "c",
+		"_assert.h": "c",
+		"features.h": "c"
 	}
 }

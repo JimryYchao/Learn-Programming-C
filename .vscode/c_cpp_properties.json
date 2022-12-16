@@ -3,7 +3,10 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                //"H:/_Environment_variables_/_C_Cpp_/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/parallel",
+                "${workspaceFolder}/_03_C Stardard Library/.src/glibc-2.36/include/",
+				"${workspaceFolder}/_03_C Stardard Library/.src/glibc-2.36/"
             ],
             "defines": [
                 "_DEBUG",
