@@ -13,7 +13,7 @@
 inline static void print_char(unsigned char c)
 {
 	printf("%d/", (int)c);
-	if (isgraph(c))
+	if (m_isgraph(c))
 		printf("%c", c);
 	else
 		printf("\\%.3o", c);
@@ -28,26 +28,26 @@ int main()
 #define TRYEM          \
 	do                 \
 	{                  \
-		TRY(isascii);  \
-		TRY(isalnum);  \
-		TRY(isalpha);  \
-		TRY(iscntrl);  \
-		TRY(isdigit);  \
-		TRY(isgraph);  \
-		TRY(islower);  \
-		TRY(isprint);  \
-		TRY(ispunct);  \
-		TRY(isspace);  \
-		TRY(isupper);  \
-		TRY(isxdigit); \
-		TRY(isblank);  \
+		TRY(m_isascii);  \
+		TRY(m_isalnum);  \
+		TRY(m_isalpha);  \
+		TRY(m_iscntrl);  \
+		TRY(m_isdigit);  \
+		TRY(m_isgraph);  \
+		TRY(m_islower);  \
+		TRY(m_isprint);  \
+		TRY(m_ispunct);  \
+		TRY(m_isspace);  \
+		TRY(m_isupper);  \
+		TRY(m_isxdigit); \
+		TRY(m_isblank);  \
 	} while (0)
 
 	for (c = 0; c <= UCHAR_MAX; ++c)
 	{
 		print_char(c);
 
-		if (XOR(islower(c), ISLOWER(c)) || toupper(c) != TOUPPER(c))
+		if (XOR(m_islower(c), ISLOWER(c)) || m_toupper(c) != TOUPPER(c))
 		{
 			fputs(" BOGUS", stdout);
 			++lose;
@@ -59,21 +59,21 @@ int main()
 		TRYEM;
 #undef TRY
 		fputs("; lower = ", stdout);
-		print_char(tolower(c));
+		print_char(m_tolower(c));
 		fputs("; upper = ", stdout);
-		print_char(toupper(c));
+		print_char(m_toupper(c));
 		putchar('\n');
 	}
 	fputs("EOF", stdout);
-	if (tolower(EOF) != EOF)
+	if (m_tolower(EOF) != EOF)
 	{
 		++lose;
-		printf(" tolower BOGUS %d;", tolower(EOF));
+		printf(" tolower BOGUS %d;", m_tolower(EOF));
 	}
-	if (toupper(EOF) != EOF)
+	if (m_toupper(EOF) != EOF)
 	{
 		++lose;
-		printf(" toupper BOGUS %d;", toupper(EOF));
+		printf(" toupper BOGUS %d;", m_toupper(EOF));
 	}
 
 #define TRY(isfoo)  \

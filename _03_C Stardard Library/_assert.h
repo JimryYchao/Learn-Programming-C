@@ -5,27 +5,28 @@ $id: assert.h
   <assert.h> 定义了宏 assert 和 static_assert 并引用了 NDEBUG 用于取消断言
 */
 
-#include "Lib-Macros.h"
-
 #ifdef t_Assert
 #undef t_Assert
 
 #undef _assert
 #endif
 
-/* assert.h */
-#include PATH_ASSERT_H
+// INCLUDE assert.h
+#include <assert.h>
 
 #ifndef t_Assert
 #define t_Assert
 
-/* Program Diagnostics */
+// REGION: Program Diagnostics
 #ifdef NDEBUG
-#define _assert(_expr) assert(_expr) /* 断言宏 */
+// MACRO: 断言宏
+#define m_assert(expr) assert(expr)
 #else /* not define NDEBUG */
-#define _assert(_expr) assert(_expr) /* 断言宏 */
+// MACRO: 断言宏
+#define m_assert(expr) assert(expr)
 #endif /* End NDEBUG */
 
-#undef _static_assert
-#define _static_assert static_assert /* 静态断言宏 */
+#undef m_static_assert
+// MACRO: 静态断言宏
+#define m_static_assert static_assert
 #endif

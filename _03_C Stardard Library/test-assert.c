@@ -8,7 +8,14 @@ int main()
 {
 	// static_assert(sizeof(int) == 1);
 
-	_assert(sizeof(int) == 4);
-	_assert("abc");
-	_assert(1 != 1);
+	m_assert(sizeof(int) == 4);
+	m_assert("abc");
+
+#define NDEBUG
+#include "_assert.h"
+	m_assert(1 != 1);
+
+#undef NDEBUG
+#include "_assert.h"
+	m_assert(1 != 1);
 }
