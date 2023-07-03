@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="assert.c" />
     <ClCompile Include="complex.c" />
+    <ClCompile Include="ctype.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

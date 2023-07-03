@@ -3,9 +3,8 @@
 
 #define ASSERT_FAILED "assert failed."
 
-int test(void);
-
-int test(void) {
+void test_assert(void);
+void test_assert(void) {
 
 	assert(1 == 1);
 	assert(1 > 2);
