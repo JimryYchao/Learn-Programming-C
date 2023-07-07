@@ -1,4 +1,4 @@
-// #define NDEBUG    // È¡Ïû¶ÏÑÔ¿âÕï¶Ï
+// #define NDEBUG    // È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ï¿½
 #include <assert.h>
 
 #define ASSERT_FAILED "assert failed."
@@ -10,5 +10,5 @@ void test_assert(void) {
 	assert(1 > 2);
 
 	static_assert(1 == 1, ASSERT_FAILED);
-	// static_assert(1 > 2, ASSERT_FAILED);  // ¾²Ì¬¶ÏÑÔ²»ÊÜ NDEBUG ºêÓ°Ïì
+	// static_assert(1 > 2, ASSERT_FAILED);  // ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½ NDEBUG ï¿½ï¿½Ó°ï¿½ï¿½
 }
