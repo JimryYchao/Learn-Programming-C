@@ -54,6 +54,7 @@
 		"ccomplex": "cpp",
 		"lib-macros.h": "c",
 		"_assert.h": "c",
-		"features.h": "c"
+		"features.h": "c",
+		"_test_head.h": "c"
 	}
 }

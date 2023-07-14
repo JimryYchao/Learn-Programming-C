@@ -1,5 +1,0 @@
-﻿  ctype.c
-D:\JCWork\_Learn_\_Program Language_\_C_\_03_C Stardard Library\test-clib-2.36\C-standard-library\ctype.c(6,102): warning C4305: “初始化”: 从“int”到“wchar_t”截断
-D:\JCWork\_Learn_\_Program Language_\_C_\_03_C Stardard Library\test-clib-2.36\C-standard-library\ctype.c(79,14): warning C4244: “初始化”: 从“wint_t”转换到“char”，可能丢失数据
-D:\JCWork\_Learn_\_Program Language_\_C_\_03_C Stardard Library\test-clib-2.36\C-standard-library\ctype.c(82,14): warning C4244: “初始化”: 从“wint_t”转换到“char”，可能丢失数据
-  C-standard-library.vcxproj -> D:\JCWork\_Learn_\_Program Language_\_C_\_03_C Stardard Library\test-clib-2.36\C-standard-library\x64\Debug\C-standard-library.exe
