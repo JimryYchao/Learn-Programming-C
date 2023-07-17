@@ -55,6 +55,9 @@
 		"lib-macros.h": "c",
 		"_assert.h": "c",
 		"features.h": "c",
-		"_test_head.h": "c"
+		"_test_head.h": "c",
+		"error.h": "c",
+		"fenv.h": "c",
+		"*.tbl": "c"
 	}
 }
