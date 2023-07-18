@@ -1,17 +1,9 @@
-#include "_test_head.h"
 #define NDEBUG // 取消 assert 断言功能，静态断言不受影响
 #include <assert.h>
 
 static void Test_Undef_Assert();
 static void Test_Def_Assert();
 static void Test_StaticAssert();
-
-static void Test_C_Lib()
-{
-    Test_Undef_Assert();
-
-    Test_Def_Assert();
-}
 
 void Test_Undef_Assert()
 {
@@ -26,7 +18,7 @@ void Test_Undef_Assert()
 void Test_Def_Assert()
 {
     assert(2 > 1);
-    assert(1 > 2);  // Assertion failed!
+    assert(1 > 2); // Assertion failed!
     Test_StaticAssert();
 }
 
@@ -38,7 +30,9 @@ void Test_StaticAssert()
 
 int main(int argc, char const *argv[])
 {
-    Test_C_Lib();
+    Test_Undef_Assert();
+
+    Test_Def_Assert();
 
     return 0;
 }

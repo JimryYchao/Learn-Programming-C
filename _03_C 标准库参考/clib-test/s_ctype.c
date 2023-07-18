@@ -1,4 +1,3 @@
-#include "_test_head.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -36,13 +35,6 @@ inline static void print_char(unsigned char c)
         printf("%c", c);
     else
         printf("\\%.3o", c);
-}
-
-void Test_C_Lib()
-{
-    Test_Ctype_functions();
-
-    Test_Wctype();
 }
 
 void Test_Ctype_functions()
@@ -110,7 +102,10 @@ void Test_Ctype_functions()
 
 int main(int argc, char const *argv[])
 {
-    Test_C_Lib();
+    Test_Ctype_functions();
+
+    Test_Wctype();
+
     return 0;
 }
 

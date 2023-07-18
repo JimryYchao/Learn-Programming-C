@@ -1,4 +1,3 @@
-#include "_test_head.h"
 #include <errno.h>
 #include <stdio.h>
 #include <math.h>
@@ -6,11 +5,6 @@
 
 static void Test_errno();
 static void Test_Macros();
-
-void Test_C_Lib()
-{
-  Test_errno();
-}
 
 void Test_errno()
 {
@@ -53,7 +47,8 @@ void Test_Macros()
 
 int main(void)
 {
-  Test_C_Lib();
+  Test_errno();
+  return 0;
 }
 /*
   no error occurred
