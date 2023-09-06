@@ -4,7 +4,7 @@
 		{
 			"type": "cppbuild",
 			"label": "C/C++: gcc.exe",
-			"command": "H:/_Environment_variables_/_C_Cpp_/mingw64/bin/gcc.exe",
+			"command": "C:/_Programme Environment_/_C_Cpp_/mingw64/bin/gcc.exe",
 			"args": [
 				"-fdiagnostics-color=always",
 				"-g",
@@ -13,7 +13,7 @@
 				"${fileDirname}\\${fileBasenameNoExtension}.exe"
 			],
 			"options": {
-				"cwd": "H:/_Environment_variables_/_C_Cpp_/mingw64/bin"
+				"cwd": "C:/_Programme Environment_/_C_Cpp_/mingw64/bin"
 			},
 			"problemMatcher": [
 				"$gcc"
@@ -22,7 +22,7 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"detail": "编译器: H:/_Environment_variables_/_C_Cpp_/mingw64/bin/gcc.exe"
+			"detail": "编译器:C:/_Programme Environment_/_C_Cpp_/mingw64/bin/gcc.exe"
 		}
 	]
 }

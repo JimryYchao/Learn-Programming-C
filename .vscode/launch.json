@@ -22,7 +22,7 @@
 			//true显示外置的控制台窗口，false显示内置终端
             "externalConsole": true,
             "MIMode": "gdb",
-            "miDebuggerPath": "H:/_Environment_variables_/_C_Cpp_/mingw64/bin/gdb.exe",
+            "miDebuggerPath": "C:/_Programme Environment_/_C_Cpp_/mingw64/bin/gdb.exe",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",

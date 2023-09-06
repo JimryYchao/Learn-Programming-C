@@ -4,14 +4,14 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/_03_C Stardard Library/.src/glibc-2.36/include"
+                "${workspaceFolder}/_03_C 标准库参考/clib-test/"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "H:/_Environment_variables_/_C_Cpp_/mingw64/bin/gcc.exe",
+            "compilerPath": "C:/_Programme Environment_/_C_Cpp_/mingw64/bin/gcc.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "windows-gcc-x64"
