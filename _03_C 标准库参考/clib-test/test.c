@@ -1,44 +1,43 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdalign.h>
 
-#pragma pack(1)
-
-typedef struct _st_struct2
+struct st
 {
-    char a;  // 地址位 0
-    int c;   // 地址位 4
-    short b; // 地址位 8
-} st_struct2;
+    alignas(8) char a;  // 地址位 0
+    alignas(4) short b; // 地址位 8
+    alignas(32) int c;  // 地址位 4
+} st;
 
-typedef struct
+_Pragma("nonstandardtreatmenttypeB on");
+
+int Add(int, int);
+
+int Add(int a, int b)
 {
-    bool a : 1;
-    bool b : 1;
-    bool c : 1;
+    return a + b;
+}
 
-} BitState;
-
-typedef union 
-{
-    int a;
-    float af;
-} u;
-
+typedef int (*pFun)(int, int);
 
 int main()
 {
-    st_struct2 st = {1, 4, 2};
-    BitState *bs = &(BitState){10001,1,1};
+    pFun pf = *&*&*&*&*&*&Add;
 
-    u uu = {.af = 1.0001f};
-
-    printf("%.1f , %d\n", uu.af,uu.a);
-
-    printf("%d, %d, %d, SIZE = %d\n", bs->a, bs->b, bs->c, sizeof(bs));
-
-    printf("SIZE = %d\n" // 4
-           "Pa = %p\n"   //
-           "Pb = %p\n"
-           "Pc = %p",
-           sizeof(st), &st.a, &st.b, &st.c);
+    pFun *p = &pf;
+    pFun **pp = &p;
+    printf("%p\n", &"hello");
+    printf("%p   %d\n", pp, (**Add)(1,1));
+    printf("%p\n%p\n%p\n%p\n%p\n%p\n%p", Add, pf, (*pf), **pf, ***pf, ****pf, *****Add);
 }
+/*
+000000000061FE10
+000000000061FE08   2
+0000000000401550
+0000000000401550
+0000000000401550
+0000000000401550
+0000000000401550
+0000000000401550
+0000000000401550
+*/
