@@ -1,43 +1,38 @@
 #include <stdio.h>
-#include <stdbool.h>
-#include <stdalign.h>
+#include <locale.h>
 
-struct st
+#define PR(Format, value) printf("[" #value "] = " #Format "\n", value)
+
+void print_locale()
 {
-    alignas(8) char a;  // 地址位 0
-    alignas(4) short b; // 地址位 8
-    alignas(32) int c;  // 地址位 4
-} st;
+    struct lconv locale = *localeconv();
 
-_Pragma("nonstandardtreatmenttypeB on");
+    PR("%s", locale.decimal_point);
+    PR("%s", locale.thousands_sep);
+    PR("%u", *locale.grouping);
 
-int Add(int, int);
+    PR("%s", locale.mon_decimal_point);
+    PR("%s", locale.mon_thousands_sep);
+    PR("%u", *locale.mon_grouping);
+    PR("%s", locale.positive_sign);
+    PR("%s", locale.negative_sign);
 
-int Add(int a, int b)
-{
-    return a + b;
+    PR("%s", locale.currency_symbol);
+    PR("%u", locale.frac_digits);
+    PR("%u", locale.p_cs_precedes);
+    PR("%u", locale.n_cs_precedes);
+    PR("%u", locale.p_sep_by_space);
+    PR("%u", locale.n_sep_by_space);
+    PR("%u", locale.p_sign_posn);
+    PR("%u", locale.n_sign_posn);
+
+    PR("%s", locale.int_curr_symbol);
+    PR("%u", locale.int_frac_digits);
 }
-
-typedef int (*pFun)(int, int);
-
-int main()
+int main(void)
 {
-    pFun pf = *&*&*&*&*&*&Add;
-
-    pFun *p = &pf;
-    pFun **pp = &p;
-    printf("%p\n", &"hello");
-    printf("%p   %d\n", pp, (**Add)(1,1));
-    printf("%p\n%p\n%p\n%p\n%p\n%p\n%p", Add, pf, (*pf), **pf, ***pf, ****pf, *****Add);
+    // wprintf(L"我是你爸爸");
+   _wsetlocale(LC_ALL, L"chinese");
+    print_locale();
+    wprintf(L"我是你爸爸");
 }
-/*
-000000000061FE10
-000000000061FE08   2
-0000000000401550
-0000000000401550
-0000000000401550
-0000000000401550
-0000000000401550
-0000000000401550
-0000000000401550
-*/

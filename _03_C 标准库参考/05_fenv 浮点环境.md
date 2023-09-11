@@ -1,4 +1,4 @@
-## [C 浮点环境：fenv.h](./clib-test/s_fenv.c)
+## C 浮点环境：fenv.h
 
 浮点环境是浮点状态标志及实现所支持的控制模式的集合。浮点环境具有线程存储持续时间。线程的浮点环境的初始状态是创建它的线程的浮点环境在创建时的当前状态。
 
@@ -16,6 +16,17 @@
 `fexcept_t` 集中表示所有浮点异常状态标志的类型。
 
 ---
+### Pragma: fenv_access （设置浮点控制模式）
+
+```c
+#include <fenv.h>
+#pragma fenv_access(on | off)  // ON or OFF
+```
+
+`#pragma fenv_access(on | off) ` 提供了一种方法来通知程序何时可以访问浮点环境来测试浮点状态标志或在非默认浮点控制模式下运行。
+
+---
+
 ### Macros
 
 #### 浮点异常
@@ -34,44 +45,59 @@
 > Test
 
 ```c
-#include <stdio.h>
+// MSVC
+#include <stdio.h>asdasdaw
 #include <math.h>
 #include <float.h>
 #include <fenv.h>
- 
-#pragma STDC FENV_ACCESS ON
+
+#pragma fenv_access(on)  // 开启浮点环境控制模式
 void show_fe_exceptions(void)
 {
     printf("exceptions raised:");
-    if(fetestexcept(FE_DIVBYZERO)) printf(" FE_DIVBYZERO");
-    if(fetestexcept(FE_INEXACT))   printf(" FE_INEXACT");
-    if(fetestexcept(FE_INVALID))   printf(" FE_INVALID");
-    if(fetestexcept(FE_OVERFLOW))  printf(" FE_OVERFLOW");
-    if(fetestexcept(FE_UNDERFLOW)) printf(" FE_UNDERFLOW");
+    if (fetestexcept(FE_DIVBYZERO)) printf(" FE_DIVBYZERO");
+    if (fetestexcept(FE_INEXACT))   printf(" FE_INEXACT");
+    if (fetestexcept(FE_INVALID))   printf(" FE_INVALID");
+    if (fetestexcept(FE_OVERFLOW))  printf(" FE_OVERFLOW");
+    if (fetestexcept(FE_UNDERFLOW)) printf(" FE_UNDERFLOW");
     feclearexcept(FE_ALL_EXCEPT);
     printf("\n");
 }
- 
+
 int main(void)
 {
-    printf("0.0/0.0 = %f\n", 0.0/0.0);
+    printf("0.0/0.0 = %f\n", 0.0 / 0.0);
     show_fe_exceptions();
- 
-    printf("1.0/0.0 = %f\n", 1.0/0.0);
+
+    printf("1.0/0.0 = %f\n", 1.0 / 0.0);
     show_fe_exceptions();
- 
-    printf("1.0/10.0 = %f\n", 1.0/10.0);
+
+    printf("1.0/10.0 = %f\n", 1.0 / 10.0);
     show_fe_exceptions();
- 
+
     printf("sqrt(-1) = %f\n", sqrt(-1));
     show_fe_exceptions();
- 
-    printf("DBL_MAX*2.0 = %f\n", DBL_MAX*2.0);
+
+    printf("DBL_MAX*2.0 = %f\n", DBL_MAX * 2.0);
     show_fe_exceptions();
- 
-    printf("nextafter(DBL_MIN/pow(2.0,52),0.0) = %.1f\n", nextafter(DBL_MIN/pow(2.0,52),0.0));
+
+    printf("nextafter(DBL_MIN/pow(2.0,52),0.0) = %.1f\n", nextafter(DBL_MIN / pow(2.0, 52), 0.0));
     show_fe_exceptions();
 }
+/*
+0.0/0.0 = -nan(ind)
+exceptions raised: FE_INVALID
+1.0/0.0 = inf
+exceptions raised: FE_DIVBYZERO
+1.0/10.0 = 0.100000
+exceptions raised: FE_INEXACT
+sqrt(-1) = -nan(ind)
+exceptions raised: FE_INVALID
+DBL_MAX*2.0 = inf
+exceptions raised: FE_INEXACT FE_OVERFLOW
+nextafter(DBL_MIN/pow(2.0,52),0.0) = 0.0
+exceptions raised: FE_INEXACT FE_UNDERFLOW
+*/
 ```
 
 <br>
@@ -113,8 +139,8 @@ lrint(2.1); // 2 或 3
 
 > 当前舍入模式不影响
 
-- 浮点到整数的隐式转换或转型（始终向零）
-- 编译时执行的常量表达式中浮点算数运算符的结果（始终向最接近）
+- 浮点到整数的隐式转换或转型（始终向零）。
+- 编译时执行的常量表达式中浮点算数运算符的结果（始终向最接近）。
 - 库函数 `round`、`lround`、`llround`、`ceil`、`floor`、`trunc`。
 
 > Test
@@ -124,9 +150,11 @@ lrint(2.1); // 2 或 3
 #include <stdlib.h>
 #include <fenv.h>
 #include <math.h>
+
+#pragma fenv_access(on)
+
 int main()
 {
-#pragma STDC FENV_ACCESS ON
     fesetround(FE_DOWNWARD);
     puts("rounding down: ");
     printf("           pi = %.22f\n", acosf(-1));
@@ -167,7 +195,7 @@ strtof("1.1") = 1.1000000238418579101563
 #include <stdio.h>
 #include <fenv.h>
  
-#pragma STDC FENV_ACCESS ON // 开启浮点环境控制模式
+#pragma fenv_access(on) // 开启浮点环境控制模式
 // 浮点异常
 void show_fe_exceptions(void)
 {
@@ -231,21 +259,11 @@ current rounding method:    FE_TONEAREST
 ```
 
 ---
-### pragma：FENV_ACCESS
-
-```c
-#include <fenv.h>
-#pragma STDC FENV_ACCESS ON  // ON or OFF
-```
-
-`#pragma STDC FENV_ACCESS on-off-switch` 提供了一种方法来通知程序何时可以访问浮点环境来测试浮点状态标志或在非默认浮点控制模式下运行
-
----
-### functions：浮点异常（Floating-point exceptions）
+### Functions：浮点异常（Floating-point exceptions）
 
 浮点异常函数提供对浮点状态标志的访问。函数的 `int` 输入参数表示对浮点异常的子集（0 或者是一个或多个浮点异常宏的位或，如 `FE_OVERFLOW | FE_INEXACT`）。对于其他参数值，则是未定义行为。
 
-#### feclearexcept
+#### feclearexcept （清除浮点异常位 ）
 
 ```c
 int feclearexcept(int excepts);
@@ -260,23 +278,27 @@ int feclearexcept(int excepts);
 #include <float.h>
  
 /*
- * 可能的hypot实现，它会活用许多高级浮点特性。
+ * 可能的 hypot (三角斜边) 实现，它会活用许多高级浮点特性。
  */
-double hypot_demo(double a, double b) {
+double hypot_demo(double a, double b)
+{
   const int range_problem = FE_OVERFLOW | FE_UNDERFLOW;
-  feclearexcept(range_problem);
-  // 尝试快速算法
+  feclearexcept(range_problem);  // 清除浮点异常位
+  
+  /* 尝试快速算法 */
   double result = sqrt(a * a + b * b);
-  if (!fetestexcept(range_problem))  // 未上溢或下溢
-    return result;                   // 返回结果
+  // 若未上溢或下溢
+  if (!fetestexcept(range_problem))  
+    return result;                   
 
-  // 做更多复杂计算以避免上溢或下溢
+  /* 做更多复杂计算以避免上溢或下溢 */
   int a_exponent,b_exponent;
   frexp(a, &a_exponent);
   frexp(b, &b_exponent);
   if (a_exponent - b_exponent > DBL_MAX_EXP)
     return fabs(a) + fabs(b);        // 我们可以忽略小值
-  // 令 fabs(a) 的规模接近1
+    
+  /* 令 fabs(a) 的规模接近 1 */
   double a_scaled = scalbn(a, -a_exponent);
   double b_scaled = scalbn(b, -a_exponent);
   // 现在上溢和下溢是不可能的
@@ -303,7 +325,7 @@ hypot(8.988466e+307, 8.988466e+307) = 1.271161e+308
 
 <br>
 
-#### fegetexceptflag & fesetexceptflag
+#### fegetexceptflag & fesetexceptflag （获取或设置指定的浮点异常标志）
 
 ```c
 int fegetexceptflag(fexcept_t *flagp, int excepts);
@@ -320,7 +342,7 @@ int fesetexceptflag(const fexcept_t *flagp, int excepts);
 #include <stdio.h>
 #include <fenv.h>
  
-#pragma STDC FENV_ACCESS ON
+#pragma fenv_access(on)
  
 void show_fe_exceptions(void)
 {
@@ -365,7 +387,7 @@ current exceptions raised: FE_INVALID
 
 <br>
 
-#### feraiseexcept
+#### feraiseexcept （引发指定浮点异常）
 
 ```c
 int feraiseexcept(int excepts);
@@ -377,7 +399,7 @@ int feraiseexcept(int excepts);
 #include <stdio.h>
 #include <fenv.h>
  
-#pragma STDC FENV_ACCESS ON
+#pragma fenv_access(on)
  
 void show_fe_exceptions(void)
 {
@@ -415,7 +437,7 @@ current exceptions raised:  FE_INEXACT FE_OVERFLOW
 
 <br>
 
-#### fetestexcept
+#### fetestexcept （确认浮点异常状态是否设置）
 
 ```c
 int fetestexcept(int excepts);
@@ -429,7 +451,7 @@ int fetestexcept(int excepts);
 #include <fenv.h>
 #include <float.h>
  
-#pragma STDC FENV_ACCESS ON
+#pragma fenv_access(on)
  
 void show_fe_exceptions(void)
 {
@@ -463,7 +485,7 @@ int main(void)
 current exceptions raised:  none
 1.0/0.0     = inf
 1.0/10.0    = 0.100000
-sqrt(-1)    = -nan
+sqrt(-1)    = -nan(ind)
 DBL_MAX*2.0 = inf
 nextafter(DBL_MIN/pow(2.0,52),0.0) = 0.0
 current exceptions raised:  FE_DIVBYZERO FE_INEXACT FE_INVALID FE_OVERFLOW FE_UNDERFLOW
@@ -471,9 +493,9 @@ current exceptions raised:  FE_DIVBYZERO FE_INEXACT FE_INVALID FE_OVERFLOW FE_UN
 ```
 
 ---
-### functions：浮点舍入方向（Rounding direction modes）
+### Functions：浮点舍入方向（Rounding direction modes）
 
-#### fegetround & fesetround
+#### fegetround & fesetround （获得或设置数字的舍入方向）
 
 ```c
 int fegetround(void);
@@ -489,7 +511,8 @@ int fesetround(int round);
 #include <math.h>
 #include <fenv.h>
  
-#pragma STDC FENV_ACCESS ON
+#pragma fenv_access(on)
+
 void show_fe_current_rounding_method(void)
 {
     printf("current rounding method:  ");
@@ -537,11 +560,11 @@ current rounding method:  FE_TONEAREST
 ```
 
 ---
-### functions：浮点环境（Environment）
+### Functions：浮点环境（Environment）
 
 这些函数用来管理浮点环境（状态标志和控制模式）。
 
-#### fegetenv & fesetenv
+#### fegetenv & fesetenv （保存或恢复当前浮点环境）
 
 ```c
 int fegetenv(fenv_t *envp);
@@ -550,14 +573,14 @@ int fesetenv(const fenv_t *envp);
 
 `fegetenv` 函数试图将当前的浮点环境存储到 `envp` 所指向的对象中。成功存储时返回零。
 
-`fesetenv` 函数试图建立由 `envp` 表示的浮点环境状态。`envp` 的值必须是通过调用 `fegetenv` 或 `feholdexcept` 设置的对象或是浮点宏常量。`fesetenv` 仅安装 `envp` 表示的浮点环境宏标记的状态，并且不会引发这些浮点异常。
+`fesetenv` 函数试图建立由 `envp` 表示的浮点环境状态。`envp` 的值必须是通过调用 `fegetenv` 或 `feholdexcept` 设置的对象或是浮点宏常量。`fesetenv` 仅安装 `envp` 表示的浮点环境宏标记的状态，并且不会引发这些浮点异常。成功设置时返回零。
 
 ```c
 #include <stdio.h>
 #include <math.h>
 #include <fenv.h>
  
-#pragma STDC FENV_ACCESS ON
+#pragma fenv_access(on)
  
 void show_fe_exceptions(void)
 {
@@ -624,22 +647,22 @@ int main(void)
     return 0;
 }
 /*
-current exceptions raised: none
-current rounding method:   FE_TONEAREST
- 
+current exceptions raised:  none
+current rounding method:    FE_TONEAREST
+
 +11.5 -> +12.0
 +12.5 -> +12.0
-current exceptions raised: FE_INEXACT
-current rounding method:   FE_TONEAREST
- 
+current exceptions raised:  FE_INEXACT
+current rounding method:    FE_TONEAREST
+
 1.0/0.0 = inf
 +11.5 -> +11.0
 +12.5 -> +12.0
-current exceptions raised: FE_DIVBYZERO FE_INEXACT
-current rounding method:   FE_DOWNWARD
- 
-current exceptions raised: FE_INEXACT
-current rounding method:   FE_TONEAREST
+current exceptions raised:  FE_DIVBYZERO FE_INEXACT
+current rounding method:    FE_DOWNWARD
+
+current exceptions raised:  FE_INEXACT
+current rounding method:    FE_TONEAREST
 */
 ```
 
@@ -660,46 +683,49 @@ int feupdateenv(const fenv_t *envp);
 #include <stdio.h>
 #include <fenv.h>
 #include <float.h>
- 
-#pragma STDC FENV_ACCESS ON
- 
+
+#pragma fenv_access(on)
+
 void show_fe_exceptions(void)
 {
     printf("current exceptions raised: ");
-    if(fetestexcept(FE_DIVBYZERO))     printf(" FE_DIVBYZERO");
-    if(fetestexcept(FE_INEXACT))       printf(" FE_INEXACT");
-    if(fetestexcept(FE_INVALID))       printf(" FE_INVALID");
-    if(fetestexcept(FE_OVERFLOW))      printf(" FE_OVERFLOW");
-    if(fetestexcept(FE_UNDERFLOW))     printf(" FE_UNDERFLOW");
-    if(fetestexcept(FE_ALL_EXCEPT)==0) printf(" none");
+    if (fetestexcept(FE_DIVBYZERO))     printf(" FE_DIVBYZERO");
+    if (fetestexcept(FE_INEXACT))       printf(" FE_INEXACT");
+    if (fetestexcept(FE_INVALID))       printf(" FE_INVALID");
+    if (fetestexcept(FE_OVERFLOW))      printf(" FE_OVERFLOW");
+    if (fetestexcept(FE_UNDERFLOW))     printf(" FE_UNDERFLOW");
+    if (fetestexcept(FE_ALL_EXCEPT) == 0) printf(" none");
     printf("\n");
 }
- 
-double x2 (double x)   /* 乘二 */
+
+double x2(double x)   /* 乘二 */
 {
     fenv_t curr_excepts;
- 
+
     /* 保存并清除当前浮点异常。 */
     feholdexcept(&curr_excepts);
- 
+
     /* 引发不准确和上溢异常。 */
-    printf("In x2():  x = %f\n", x=x*2.0);
+    printf("In x2():  x = %f\n", x = x * 2.0);
     show_fe_exceptions();
-    feclearexcept(FE_INEXACT);   /* 从调用方隐藏不准确异常 */
- 
+
+    /* 从调用方隐藏上溢异常 */
+    feclearexcept(FE_OVERFLOW);   
+
     /* 将调用方的异常（ FE_INVALID ）并入剩下的 x2 的异常（ FE_OVERFLOW）。 */
     feupdateenv(&curr_excepts);
     return x;
 }
- 
+
 int main(void)
-{    
+{
     feclearexcept(FE_ALL_EXCEPT);
     feraiseexcept(FE_INVALID);   /* 一些有非法参数的计算 */
     show_fe_exceptions();
+
     printf("x2(DBL_MAX) = %f\n", x2(DBL_MAX));
     show_fe_exceptions();
- 
+
     return 0;
 }
 /*
@@ -707,7 +733,7 @@ current exceptions raised:  FE_INVALID
 In x2():  x = inf
 current exceptions raised:  FE_INEXACT FE_OVERFLOW
 x2(DBL_MAX) = inf
-current exceptions raised:  FE_INVALID FE_OVERFLOW
+current exceptions raised:  FE_INEXACT FE_INVALID
 */
 ```
 

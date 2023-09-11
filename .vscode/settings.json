@@ -58,6 +58,8 @@
 		"_test_head.h": "c",
 		"error.h": "c",
 		"fenv.h": "c",
-		"*.tbl": "c"
+		"*.tbl": "c",
+		"inttypes.h": "c",
+		"locale.h": "c"
 	}
 }

@@ -1,9 +1,11 @@
-## [C 错误报告：errno.h](./clib-test/s_errno.c)
+## C 错误报告：errno.h
 
 `errno.h` 定义了几个有关错误报告条件相关的宏。
 
 ---
 ### Macros
+
+#### C 标准定义 macros
 
 ```c
 #define ERANGE 22  // 计算结果过大
@@ -11,7 +13,7 @@
 #define EILSEQ 42  // 非法字节序列
 ```
 
-每个定义于 `errno.h` 的宏都展开成 `int`` 类型的整数常量表达式，并且拥有独立的正整数值。
+每个定义于 `errno.h` 的宏都展开成 `int` 类型的整数常量表达式，并且拥有独立的正整数值。
 
 ```c
 #include <stdio.h>
@@ -40,7 +42,9 @@ int main(void)
 
 > POSIX 和 C++ 标准库定义了更多的额外错误常量
 
-#### errno
+<br>
+
+#### errno （错误码）
 
 ```c
 extern int *_errno(void);
