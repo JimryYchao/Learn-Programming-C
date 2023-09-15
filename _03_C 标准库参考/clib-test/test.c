@@ -1,38 +1,46 @@
+// pragma_directive_fp_contract.cpp
+// On x86 and x64 compile with: /O2 /fp:fast /arch:AVX2
+
 #include <stdio.h>
-#include <locale.h>
 
-#define PR(Format, value) printf("[" #value "] = " #Format "\n", value)
+#include <math.h>
+// remove the following line to enable FP contractions
 
-void print_locale()
+#pragma fp_contract(off)
+
+int main()
 {
-    struct lconv locale = *localeconv();
+    double z, b, t;
 
-    PR("%s", locale.decimal_point);
-    PR("%s", locale.thousands_sep);
-    PR("%u", *locale.grouping);
+    for (int i = 0; i < 10; i++)
+    {
+        b = i * 5.5;
+        t = i * 56.025;
+fpclassify
 
-    PR("%s", locale.mon_decimal_point);
-    PR("%s", locale.mon_thousands_sep);
-    PR("%u", *locale.mon_grouping);
-    PR("%s", locale.positive_sign);
-    PR("%s", locale.negative_sign);
+        printf("out = %.15e\n", z);
+    }
 
-    PR("%s", locale.currency_symbol);
-    PR("%u", locale.frac_digits);
-    PR("%u", locale.p_cs_precedes);
-    PR("%u", locale.n_cs_precedes);
-    PR("%u", locale.p_sep_by_space);
-    PR("%u", locale.n_sep_by_space);
-    PR("%u", locale.p_sign_posn);
-    PR("%u", locale.n_sign_posn);
-
-    PR("%s", locale.int_curr_symbol);
-    PR("%u", locale.int_frac_digits);
-}
-int main(void)
-{
-    // wprintf(L"我是你爸爸");
-   _wsetlocale(LC_ALL, L"chinese");
-    print_locale();
-    wprintf(L"我是你爸爸");
+    /*
+    out = 0.000000000000000e+000
+    out = 6.152500000000000e+001
+    out = 2.351000000000000e+002
+    out = 5.207249999999999e+002
+    out = 9.184000000000000e+002
+    out = 1.428125000000000e+003
+    out = 2.049900000000000e+003
+    out = 2.783725000000000e+003
+    out = 3.629600000000000e+003
+    out = 4.587525000000000e+003
+        */
+    // #pragma fp_contract (on)
+    //	double _z, _b, _t;
+    //
+    //	for (int i = 0; i < 10; i++) {
+    //		_b = i * 5.5;
+    //		_t = i * 56.025;
+    //
+    //		_z = _t * i + _b;
+    //		printf("out = %.15e\n", _z);
+    //	}
 }

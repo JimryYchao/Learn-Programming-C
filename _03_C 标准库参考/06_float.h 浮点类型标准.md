@@ -156,6 +156,8 @@ printf("FLT_ROUNDS = %d\n", FLT_ROUNDS);  // FLT_ROUNDS = 3
     1    表示用 double 代替 float
     2    表示用 long double
 */
+
+
 ```
 
 - 类型是否支持非正规数。

@@ -20,10 +20,10 @@
 
 ```c
 #include <fenv.h>
-#pragma fenv_access(on | off)  // ON or OFF
+#pragma fenv_access(on | off | default)  // ON or OFF
 ```
 
-`#pragma fenv_access(on | off) ` 提供了一种方法来通知程序何时可以访问浮点环境来测试浮点状态标志或在非默认浮点控制模式下运行。
+`#pragma fenv_access(on | off) ` 提供了一种方法来通知程序何时可以访问浮点环境来测试浮点状态标志或在非默认浮点控制模式下运行。默认为 `off`。
 
 ---
 
@@ -46,7 +46,7 @@
 
 ```c
 // MSVC
-#include <stdio.h>asdasdaw
+#include <stdio.h>
 #include <math.h>
 #include <float.h>
 #include <fenv.h>
