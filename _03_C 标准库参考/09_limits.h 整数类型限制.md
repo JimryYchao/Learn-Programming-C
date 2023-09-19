@@ -1,4 +1,4 @@
-## C 整数类型范围：limits.h
+## C 整数类型限制（Sizes of integer types）：limits.h
 
 `limits.h` 定义了一些宏，可以拓展为标准整数类型的各种限制和参数。
 

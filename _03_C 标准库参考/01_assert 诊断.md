@@ -1,4 +1,4 @@
-## C 断言库：assert.h
+## C 诊断（Diagnostics）：assert.h
 
 断言库，在程序中关键的地方进行断言。若为非真，程序将在标准错误流输出一条适当的信息，并且使执行异常终止。
  `assert.h` 定义了宏 `assert` 和 `static_assert` 并引用了 `NDEBUG` 用于取消断言。

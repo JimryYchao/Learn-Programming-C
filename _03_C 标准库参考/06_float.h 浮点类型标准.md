@@ -1,4 +1,4 @@
-## C 浮点类型标准：float.h
+## C 浮点类型标准（Characteristics of floating types）：float.h
 
 `float.h` 定义了一些有关浮点类型的各种限制和参数的宏常量。
 

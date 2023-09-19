@@ -1,4 +1,4 @@
-## C 整型类型转换：inttypes.h
+## C 整型类型转换（Format conversion of integer types）：inttypes.h
 
 `inttypes.h` 包含 `stdint.h` 并使用托管实现提供的附加功能对其进行扩展。它声明了用于操作最大宽度整数（`intmax_t`）和将数字字符串转换为最大宽度整数的函数，并声明了类型 `imaxdiv_t`
 

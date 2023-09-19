@@ -60,6 +60,10 @@
 		"fenv.h": "c",
 		"*.tbl": "c",
 		"inttypes.h": "c",
-		"locale.h": "c"
+		"locale.h": "c",
+		"signal.h": "c",
+		"stdarg.h": "c",
+		"stddef.h": "c",
+		"stdint.h": "c"
 	}
 }

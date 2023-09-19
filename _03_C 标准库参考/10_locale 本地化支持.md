@@ -1,4 +1,4 @@
-## C 本地化支持：locale.h
+## C 本地化支持（Localization）：locale.h
 
 `locale.h` 提供查询和设置区域支持的方法。
 
