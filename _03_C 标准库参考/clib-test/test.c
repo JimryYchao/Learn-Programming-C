@@ -12,7 +12,7 @@
 
 int main(void)
 {
-    printf("%zu\n", alignof(struct book));
+    printf("%zu\n", alignof(WCHAR_MAX));
 
     size_t a = _Alignof(max_align_t);
     printf("Alignment of max_align_t is %zu (%#zx)\n", a, a);
