@@ -1094,7 +1094,7 @@ long double erfcl(long double x);
 ```
 
 - 误差函数：`erf(x)` = $\frac{2}{\sqrt{\pi}} \int_0^{x} e^{-t^2}dt$.
-- 互补误差函数：`erfc(x)` = `1-erf(x)` = $\frac{2}{\sqrt{\pi}} \int_x^{\infin} e^{-t^2}dt$.
+- 互补误差函数：`erfc(x)` = `1-erf(x)` = $\frac{2}{\sqrt{\pi}} \int_x^{\infty} e^{-t^2}dt$.
 
 <br>
 
@@ -1111,7 +1111,7 @@ long double tgammal(long double x);
 long double lgammal(long double x);
 ```
 
-- 阶乘函数仅针对离散点，伽马函数是对阶乘函数的泛化。 `tgamma(x)` = $\Gamma(x) = \int_0^{\infin} t^{x-1} e^{-t}dt$.
+- 阶乘函数仅针对离散点，伽马函数是对阶乘函数的泛化。 `tgamma(x)` = $\Gamma(x) = \int_0^{\infty} t^{x-1} e^{-t}dt$.
 - 对于自然数 $x$，有 $x!$ = $\Gamma (x+1)$
 
 - `lgamma(x)` 是 `tgamma(x)` 的自然对数，即 $log_e|\Gamma(x)|$。
