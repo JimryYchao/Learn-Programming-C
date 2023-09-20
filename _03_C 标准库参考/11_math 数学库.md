@@ -518,7 +518,7 @@ tan(INFINITY) = -nan(ind)
 
 <br>
 
-#### acos、asin、atan、atan2 （反三角函数）
+#### acos、asin、atan （反三角函数）
 
 ```c
 double acos(double x);     // 反余弦函数 [-1, +1] >> [0, PI]

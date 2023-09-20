@@ -64,6 +64,10 @@
 		"signal.h": "c",
 		"stdarg.h": "c",
 		"stddef.h": "c",
-		"stdint.h": "c"
+		"stdint.h": "c",
+		"time.h": "c",
+		"pthread_time.h": "c",
+		"tgmath.h": "c",
+		"complex.h": "c"
 	}
 }

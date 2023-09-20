@@ -14,7 +14,7 @@
 
 在以下描述中，符号 $N$ 表示无前导零的无符号十进制整数（一般为 8，16，32，64... 表示整型的宽度）。
 
-#### 精确宽度整型：int $N$ _t、uint$N$_t
+#### 精确宽度整型：int*N*_t、uint*N*_t
 
 ```c
 // 有符号定宽整数类型
@@ -31,7 +31,7 @@ typedef unsigned long long   uint64_t;
 
 <br>
 
-#### 最小宽度整型：int_least$N$_t、uint_least$N$_t
+#### 最小宽度整型：int_least*N*_t、uint_least*N*_t
 
 ```c
 // 有符号最小宽度整数类型
@@ -48,7 +48,7 @@ typedef unsigned long long   uint_least64_t;
 
 <br>
 
-#### 最快的最小宽度整型：int_fast$N$_t、uint_fast$N$_t
+#### 最快的最小宽度整型：int_fast*N*_t、uint_fast*N*_t
 
 ```c
 // 有符号最快最小宽度整型
@@ -84,7 +84,7 @@ typedef unsigned long long   uintmax_t;
 ---
 ### Macros：不同类型整型对应的限制
 
-#### 精确宽度整型的限制：INT$N$_MIN、INT$N$_MAX、UINT$N$_MAX
+#### 精确宽度整型的限制：INT*N*_MIN、INT*N*_MAX、UINT*N*_MAX
 
 ```c
 #define INT8_MIN         (-127 - 1)
@@ -105,7 +105,7 @@ typedef unsigned long long   uintmax_t;
 
 <br>
 
-#### 最小宽度整型限制：INT_LEAST$N$_MIN、INT_LEAST$N$_MAX、UINT_LEAST$N$_MAX
+#### 最小宽度整型限制：INT_LEAST*N*_MIN、INT_LEAST*N*_MAX、UINT_LEAST*N*_MAX
 
 ```c
 #define INT_LEAST8_MIN   INT8_MIN
@@ -126,7 +126,7 @@ typedef unsigned long long   uintmax_t;
 
 <br>
 
-#### 最快最小宽度整型限制：INT_FAST$N$_MIN、INT_FAST$N$_MAX、UINT_FAST$N$_MAX
+#### 最快最小宽度整型限制：INT_FAST*N*_MIN、INT_FAST*N*_MAX、UINT_FAST*N*_MAX
 
 ```c
 #define INT_FAST8_MIN    INT8_MIN
