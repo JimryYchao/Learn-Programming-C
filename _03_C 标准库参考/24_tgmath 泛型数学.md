@@ -129,11 +129,11 @@ int main(void)
 > *复数限定泛型宏*
 
 ```c
-#define carg(z)     
-#define cimag(z)    
-#define conj(z)     
-#define cproj(z)    
-#define creal(z)    
+#define creal(z)         // 复数的实部
+#define cimag(z)         // 复数的虚部
+#define carg(z)          // 复数的相角
+#define conj(z)          // 复数的复数共轭
+#define cproj(z)         // 黎曼球面上的投影
 ```
 
 ---
