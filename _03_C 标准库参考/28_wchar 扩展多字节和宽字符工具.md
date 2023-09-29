@@ -55,7 +55,7 @@ typedef unsigned short   wint_t;
 ---
 ### Functions：格式化宽字符输入与输出（Formatted wide character input/output functions）
 
-- 参考 `stdio` 中的标准输入和输出函数，以下提供对应的宽字符版本
+- 参考 `stdio.h` 中的标准输入和输出函数，以下提供对应的宽字符版本。
 
 #### 格式化宽字符输出函数
 
@@ -126,7 +126,7 @@ int vswscanf_s(const wchar_t *restrict buffer, const wchar_t *restrict format, v
 ---
 ### Functions：宽字符输入与输出（Wide character input/output functions）
 
-- 参考 `stdio` 中的标准输入和输出函数，以下提供对应的宽字符版本
+- 参考 `stdio.h` 中的标准输入和输出函数，以下提供对应的宽字符版本。
 
 #### 宽字符输出函数
 
