@@ -330,7 +330,7 @@ int main()
 ---
 ### Functions：数字字符转换函数拓展
 
-#### strtoimax & wcstoimax （将字符串转换为最大有符号整数）
+#### strtoimax、wcstoimax （将字符串转换为最大有符号整数）
 
 - 函数转换字符串为数值的过程中，如果不能执行转换，返回零。如果正确值在可表示的值范围之外，则返回该函数返回类型的极值（`INTMAX_MAX` or `INTMAX_MIN`），且设置 `errno` 为 `ERANGE`。
 
@@ -397,7 +397,7 @@ errno = Result too large
 
 <br> 
 
-#### strtoumax & wcstoumax （将字符串转换为最大无符号整数）
+#### strtoumax、wcstoumax （将字符串转换为最大无符号整数）
 
 - 函数转换字符串为数值的过程中，如果不能执行转换，返回零。如果正确值在可表示的值范围之外，则返回 `UINTMAX_MAX`，且设置 `errno` 为 `ERANGE`。
 
