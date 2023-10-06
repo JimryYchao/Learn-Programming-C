@@ -68,6 +68,7 @@
 		"time.h": "c",
 		"pthread_time.h": "c",
 		"tgmath.h": "c",
-		"complex.h": "c"
+		"complex.h": "c",
+		"direct.h": "c"
 	}
 }
