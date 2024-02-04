@@ -7,9 +7,9 @@
                 "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include",
                 "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed",
                 "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/include",
-                "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include/c++",
-                "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include/c++/x86_64-w64-mingw32",
-                "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include/c++/backward"
+                // "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include/c++",
+                // "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include/c++/x86_64-w64-mingw32",
+                // "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include/c++/backward"
             ],
             "defines": [
                 "_DEBUG",

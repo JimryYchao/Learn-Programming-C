@@ -3,22 +3,25 @@
 #include "test.h"
 #include <stdbool.h>
 #include <tchar.h>
+#include <stdatomic.h>
 
-typedef struct{
-    int len;
-    int arr[];
-} Sample;
-
-int main(int argc, char *argv[], char *envp[])
+size_t vla_size(int n)
 {
-    puts("Hello");
+    typedef char vla_type[n + 3];
+    vla_type b; // variable length array
+    return sizeof(
+        typeof(b)); // execution-time sizeof, translation-time typeof operation
+}
 
-    Sample arr[] = {1,2,3,4};
-    struct S
+int main()
+{
+    int *restrict p1;
+    int *restrict q1;
+    p1 = q1; // undefined behavior0
     {
-        int value;
-        int id;
-    };
-
-    printf("%d", num);
+        int *restrict p2 = p1; // valid
+        int *restrict q2 = q1; // valid
+        p1 = q2;               // undefined behavior
+        p2 = q2;               // undefined behavior
+    }
 }
