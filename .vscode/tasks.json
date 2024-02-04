@@ -3,26 +3,24 @@
 	"tasks": [
 		{
 			"type": "cppbuild",
-			"label": "C/C++: gcc.exe",
-			"command": "C:/_Programme Environment_/_C_Cpp_/mingw64/bin/gcc.exe",
+			"label": "C/C++: gcc.exe 生成活动文件",
+			"command": "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/gcc.exe",
 			"args": [
 				"-fdiagnostics-color=always",
+				// "-std=c2x",
 				"-g",
 				"${file}",
 				"-o",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe"
 			],
 			"options": {
-				"cwd": "C:/_Programme Environment_/_C_Cpp_/mingw64/bin"
+				"cwd": "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin"
 			},
 			"problemMatcher": [
 				"$gcc"
 			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"detail": "编译器:C:/_Programme Environment_/_C_Cpp_/mingw64/bin/gcc.exe"
+			"group": "build",
+			"detail": "编译器: \"C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/gcc.exe\""
 		}
 	]
 }

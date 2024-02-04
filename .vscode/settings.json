@@ -69,6 +69,8 @@
 		"pthread_time.h": "c",
 		"tgmath.h": "c",
 		"complex.h": "c",
-		"direct.h": "c"
+		"direct.h": "c",
+		"bits.h": "c",
+		"decimal.h": "c"
 	}
 }
