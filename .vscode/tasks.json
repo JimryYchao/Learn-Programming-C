@@ -7,7 +7,7 @@
 			"command": "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/gcc.exe",
 			"args": [
 				"-fdiagnostics-color=always",
-				// "-std=c2x",
+				"-std=gnu2x",
 				"-g",
 				"${file}",
 				"-o",

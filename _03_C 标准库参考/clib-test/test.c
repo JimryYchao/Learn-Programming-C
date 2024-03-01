@@ -1,27 +1,26 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include "test.h"
-#include <stdbool.h>
-#include <tchar.h>
-#include <stdatomic.h>
+#include <complex.h>
 
-size_t vla_size(int n)
+int b;
+
+[[noreturn]] int foo(int len)
 {
-    typedef char vla_type[n + 3];
-    vla_type b; // variable length array
-    return sizeof(
-        typeof(b)); // execution-time sizeof, translation-time typeof operation
+    typedef int arr[len];
+ 
+    arr a;
+    for (size_t i = 0; i < len; i++)
+    {
+        a[i] = i;
+    }
+    return a[len - 1];
 }
 
+
+auto p = &b;
+    
 int main()
 {
-    int *restrict p1;
-    int *restrict q1;
-    p1 = q1; // undefined behavior0
-    {
-        int *restrict p2 = p1; // valid
-        int *restrict q2 = q1; // valid
-        p1 = q2;               // undefined behavior
-        p2 = q2;               // undefined behavior
-    }
+    b = 100;
+    printf("%d", *p);
+    return *p;
 }
