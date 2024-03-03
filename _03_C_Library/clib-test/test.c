@@ -1,15 +1,16 @@
-#include <stdbool.h>
+#include <string.h>
 #include <stdlib.h>
 
-int main()
+#if __STDC__ != 1
+#error "Not a standard compliant compiler"
+#endif
+ 
+#if __STDC_VERSION__ >= 202311L
+#warning "Using #warning as a standard feature"
+#endif
+ 
+#include <stdio.h>
+int main (void)
 {
-    int arr[10] = {};
-
-    for (size_t i = 0; i < 10;)
-    {
-        arr[i] = i;
-        i++;
-    }
-
-    return arr[10 - 1];
+    printf("The compiler used conforms to the ISO C Standard !!");
 }
