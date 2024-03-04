@@ -71,7 +71,10 @@
 		"complex.h": "c",
 		"direct.h": "c",
 		"bits.h": "c",
-		"decimal.h": "c"
+		"decimal.h": "c",
+		"cstddef": "c",
+		"memory": "c",
+		"random": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }
