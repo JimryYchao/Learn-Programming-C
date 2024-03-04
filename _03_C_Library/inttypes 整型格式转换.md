@@ -1,13 +1,17 @@
 ## C 整型类型转换（Format conversion of integer types）：inttypes.h
 
-`inttypes.h` 包含 `stdint.h` 并使用托管实现提供的附加功能对其进行扩展。它声明了用于操作最大宽度整数（`intmax_t`）和将数字字符串转换为最大宽度整数的函数，并声明了类型 `imaxdiv_t`
+```c
+#define __STDC_VERSION_INTTYPES_H__     202311L
+```
+
+`inttypes.h` 包含头文件 `stdint.h` 并使用托管实现提供的附加功能对其进行扩展。它声明了用于操作最大宽度整数（`intmax_t`）和将数字字符串转换为最大宽度整数的函数，并声明了类型 `imaxdiv_t`
 
 ---
 ### Type
 
 #### imaxdiv_t
 
-- 是 `imaxdiv` 函数返回值的类型。
+结构类型 `imaxdiv_t` 是 `imaxdiv` 函数返回值的类型。对于中声明的每种类型 `stdint.h`，它都为转换说明符定义了相应的宏，以便与格式化的输入/输出函数一起使用。
 
 ```c
 typedef struct
@@ -18,13 +22,22 @@ typedef struct
 ```
 
 ---
-### Macros：格式化输出
+### Macros：格式说明宏
 
-每个类对象宏都可以展开为对应类型的转换说明符的字符串字面量，适用于在转换相应的整数类型时，在格式化输入和输出函数的 format 参数中使用。
+以下每个类对象宏都可以展开为对应类型的转换说明符的字符串字面量，适用于在转换相应的整数类型时，在格式化输入和输出函数的 `format` 格式参数中使用。这些宏名的一般形式为 `PRI`（`fprintf` 和 `fwprintf` 家族的字符串字面值）或 `SCN`（`fscanf` 和 `fwscanf` 家族的字符串字面值），后跟转换说明符，后跟相应类型的名称。这些名称中，*N* 描述对应类型的宽度，*N* 可以是 8，16，32，64。例如 `PRIdFAST32` 可以在格式字符串中用于打印 `int_fast32_t` 类型的整数值。
 
-#### 用于格式化输出有符号整数的转换说明符
+>---
+#### 格式化输出
 
-> *PS：N 表示整型的类型，8、16、32、64... （`PRIdN` N = 8，表示为 `PRIdN`，对应类型 `int8_t`）。* 
+| Kind       | Conversion | Macros |
+| :--------- | :--------- | :----- |
+| 有符号整数 |     `%d`       | <code>PRId<em>N</em></code> PRIdLEASTN PRIdFASTN PRIdMAX PRIdPTR       |
+```c
+// 有符号整数的宏
+PRIdN PRIdLEASTN PRIdFASTN PRIdMAX PRIdPTR
+PRIiN PRIiLEASTN PRIiFASTN PRIiMAX PRIiPTR
+
+```
 
 - `%d` 格式化输出转换说明符。
 
@@ -76,7 +89,7 @@ typedef struct
 #endif
 ```
 
-<br>
+>---
 
 #### 用于格式化输出无符号整数的转换说明符
 
@@ -138,7 +151,7 @@ typedef struct
 #define PRIXPTR
 ```
 
-<br>
+>---
 
 #### 格式化输出案例
 
@@ -233,7 +246,7 @@ Unsigned Integers >>>
 #define SCNiPTR
 ```
 
-<br>
+>---
 
 #### 用于格式化输入无符号整数的转换说明符
 
@@ -294,7 +307,7 @@ intmax_t imaxabs(intmax_t j);
 - 计算整数 `j` 的绝对值。
 
 
-<br>
+>---
 
 #### imaxdiv （计算商余）
 
@@ -395,7 +408,7 @@ errno = Result too large
 */
 ```
 
-<br> 
+>--- 
 
 #### strtoumax、wcstoumax （将字符串转换为最大无符号整数）
 
