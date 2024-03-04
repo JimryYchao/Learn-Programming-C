@@ -24,136 +24,31 @@ typedef struct
 ---
 ### Macros：格式说明宏
 
-以下每个类对象宏都可以展开为对应类型的转换说明符的字符串字面量，适用于在转换相应的整数类型时，在格式化输入和输出函数的 `format` 格式参数中使用。这些宏名的一般形式为 `PRI`（`fprintf` 和 `fwprintf` 家族的字符串字面值）或 `SCN`（`fscanf` 和 `fwscanf` 家族的字符串字面值），后跟转换说明符，后跟相应类型的名称。这些名称中，*N* 描述对应类型的宽度，*N* 可以是 8，16，32，64。例如 `PRIdFAST32` 可以在格式字符串中用于打印 `int_fast32_t` 类型的整数值。
+以下每个类对象宏都可以展开为对应类型的转换说明符的字符串字面量，适用于在转换相应的整数类型时，在格式化输入和输出函数的 `format` 格式参数中使用。这些宏名的一般形式为 `PRI`（`fprintf` 和 `fwprintf` 家族的字符串字面值）或 `SCN`（`fscanf` 和 `fwscanf` 家族的字符串字面值），后跟转换说明符，后跟相应类型的名称。这些名称中，*`N`* 描述对应类型的宽度，*`N`* 可以是 8，16，32，64。例如 `PRIdFAST32` 可以在格式字符串中用于打印 `int_fast32_t` 类型的整数值。
 
 >---
 #### 格式化输出
 
-| Kind       | Conversion | Macros |
-| :--------- | :--------- | :----- |
-| 有符号整数 |     `%d`       | <code>PRId<em>N</em></code> PRIdLEASTN PRIdFASTN PRIdMAX PRIdPTR       |
+| Format                     | Conversion | Macros                                                                                                               |
+| :------------------------- | :--------- | :------------------------------------------------------------------------------------------------------------------- |
+| 有符号整数                 | `%d`       | <code>PRId<em>N</em></code>、<code>PRIdLEAST<em>N</em></code>、<code>PRIdFAST<em>N</em></code>、`PRIdMAX`、`PRIdPTR` |
+| 有符号整数                 | `%i`       | <code>PRIi<em>N</em></code>、<code>PRIiLEAST<em>N</em></code>、<code>PRIiFAST<em>N</em></code>、`PRIiMAX`、`PRIiPTR` |
+| 无符号二进制整数           | `%b`       | <code>PRIb<em>N</em></code>、<code>PRIbLEAST<em>N</em></code>、<code>PRIbFAST<em>N</em></code>、`PRIbMAX`、`PRIbPTR` |
+| 无符号八进制整数           | `%o`       | <code>PRIo<em>N</em></code>、<code>PRIoLEAST<em>N</em></code>、<code>PRIoFAST<em>N</em></code>、`PRIoMAX`、`PRIoPTR` |
+| 无符号十进制整数           | `%u`       | <code>PRIu<em>N</em></code>、<code>PRIuLEAST<em>N</em></code>、<code>PRIuFAST<em>N</em></code>、`PRIuMAX`、`PRIuPTR` |
+| 无符号十六进制整数（小写） | `%x`       | <code>PRIx<em>N</em></code>、<code>PRIxLEAST<em>N</em></code>、<code>PRIxFAST<em>N</em></code>、`PRIxMAX`、`PRIxPTR` |
+| 无符号十六进制整数（大写） | `%X`       | <code>PRIX<em>N</em></code>、<code>PRIXLEAST<em>N</em></code>、<code>PRIXFAST<em>N</em></code>、`PRIXMAX`、`PRIXPTR` |
+| 无符号二进制整数（可选）           | `%B`       | <code>PRIB<em>N</em></code>、<code>PRIBLEAST<em>N</em></code>、<code>PRIBFAST<em>N</em></code>、`PRIBMAX`、`PRIBPTR` |
+
 ```c
-// 有符号整数的宏
-PRIdN PRIdLEASTN PRIdFASTN PRIdMAX PRIdPTR
-PRIiN PRIiLEASTN PRIiFASTN PRIiMAX PRIiPTR
-
-```
-
-- `%d` 格式化输出转换说明符。
-
-```c
-// 映射 intN_t
+// 映射 intN_t, %d
 #define PRId8        "hhd"
 #define PRId16       "hd"
 #define PRId32       "d"
 #define PRId64       "lld"
-
-// 映射 int_leastN_t
-#define PRIdLEAST8   PRId8
-#define PRIdLEAST16  PRId16
-#define PRIdLEAST32  PRId32
-#define PRIdLEAST64  PRId64
-
-// 映射 int_fastN_t
-#define PRIdFAST8    PRId8
-#define PRIdFAST16   PRId32
-#define PRIdFAST32   PRId32
-#define PRIdFAST64   PRId64
-
-// other macros
-#define PRIdMAX      PRId64
-#ifdef _WIN64
-    #define PRIdPTR  PRId64
-#else
-    #define PRIdPTR  PRId32
-#endif
 ```
 
-- `%i` 格式化输出转化说明符。
-
-```c
-#define PRIi8        "hhi"
-#define PRIi16       "hi"
-#define PRIi32       "i"
-#define PRIi64       "lli"
-
-#define PRIiLEASTN   PRIiN
-#define PRIiFASTN    PRIiN
-
-#define PRIiMAX      PRIi64
-
-#ifdef _WIN64
-    #define PRIiPTR  PRIi64
-#else
-    #define PRIiPTR  PRIi32
-#endif
-```
-
->---
-
-#### 用于格式化输出无符号整数的转换说明符
-
-- 无符号八进制整数转换说明符（`%o`）。
-
-```c
-#define PRIo8        "hho"
-#define PRIo16       "ho"
-#define PRIo32       "o"
-#define PRIo64       "llo"
-
-#define PRIoLEASTN   PRIoN
-#define PRIoFASTN    PRIoN
-
-#define PRIoMAX      PRIo64
-#define PRIoPTR 
-```
-
-- 无符号十进制整数转换说明符（`%u`）。
-
-```c
-#define PRIu8        "hhu"
-#define PRIu16       "hu"
-#define PRIu32       "u"
-#define PRIu64       "llu"
-
-#define PRIuLEASTN   PRIuN
-#define PRIuFASTN    PRIuN
-
-#define PRIuMAX      PRIu64
-#define PRIuPTR      
-```
-
-- 无符号十六进制整数转换说明符（`%x` / `%X`）。
-
-```c
-// 小写格式化
-#define PRIx8        "hhx"
-#define PRIx16       "hx"
-#define PRIx32       "x"
-#define PRIx64       "llx"
-
-#define PRIxLEASTN   PRIxN
-#define PRIxFASTN    PRIxN
-
-#define PRIxMAX      PRIx64
-#define PRIxPTR
-
-// 大写格式化
-#define PRIX8        "hhX"
-#define PRIX16       "hX"
-#define PRIX32       "X"
-#define PRIX64       "llX"
-
-#define PRIXLEASTN   PRIXN
-#define PRIXFASTN    PRIXN
-
-#define PRIXMAX      PRIX64
-#define PRIXPTR
-```
-
->---
-
-#### 格式化输出案例
+> *格式化输出案例*
 
 ```c
 #include <stdio.h>
@@ -209,90 +104,24 @@ Unsigned Integers >>>
 */
 ```
 
----
-### Macros：格式化输入
+>---
+#### 格式化输入
 
-#### 用于格式化输入有符号整数的转换说明符
-
-> *PS：N 表示整型的类型，8、16、32、64... （`intN_t` N = 8，表示为 `int8_t` 类型）。* 
-
-- `%d` 格式化输入转换说明符。
+| Format | Conversion | Macros |
+| :----- | :--------- | :----- |
+|有符号整数|`%d`|<code>SCNd<em>N</em></code>、<code>SCNdLEAST<em>N</em></code>、<code>SCNdFAST<em>N</em></code>、`SCNdMAX`、`SCNdPTR`|
+|有符号整数|`%i`|<code>SCNi<em>N</em></code>、<code>SCNiLEAST<em>N</em></code>、<code>SCNiFAST<em>N</em></code>、`SCNiMAX`、`SCNiPTR`|
+|无符号二进制整数|`%b`|<code>SCNb<em>N</em></code>、<code>SCNbLEAST<em>N</em></code>、<code>SCNbFAST<em>N</em></code>、`SCNbMAX`、`SCNbPTR`|
+|无符号八进制整数|`%o`|<code>SCNo<em>N</em></code>、<code>SCNoLEAST<em>N</em></code>、<code>SCNoFAST<em>N</em></code>、`SCNoMAX`、`SCNoPTR`|
+|无符号十进制整数|`%u`|<code>SCNu<em>N</em></code>、<code>SCNuLEAST<em>N</em></code>、<code>SCNuFAST<em>N</em></code>、`SCNuMAX`、`SCNuPTR`|
+|无符号十六进制整数|`%x`|<code>SCNx<em>N</em></code>、<code>SCNxLEAST<em>N</em></code>、<code>SCNxFAST<em>N</em></code>、`SCNxMAX`、`SCNxPTR`|
 
 ```c
+// 映射 intN_t, %d
 #define SCNd8        "hhd"
 #define SCNd16       "hd"
 #define SCNd32       "d"
 #define SCNd64       "lld"
-
-#define SCNdLEASTN   SCNdN
-#define SCNdFASTN    SCNdN
-
-#define SCNdMAX      SCNd64
-#define SCNdPTR
-```
-
-- `%i` 格式输入转换说明符。
-
-```c
-#define SCNi8        "hhi"
-#define SCNi16       "hi"
-#define SCNi32       "i"
-#define SCNi64       "lli"
-
-#define SCNiLEASTN   SCNiN
-#define SCNiFASTN    SCNiN
-
-#define SCNiMAX      SCNi64
-#define SCNiPTR
-```
-
->---
-
-#### 用于格式化输入无符号整数的转换说明符
-
-- 无符号八进制整数（`%o`）。
-
-```c
-#define SCNo8        "hho"
-#define SCNo16       "ho"
-#define SCNo32       "o"
-#define SCNo64       "llo"
-
-#define SCNoLEASTN   SCNoN
-#define SCNoFASTN    SCNoN
-
-#define SCNoMAX      SCNo64
-#define SCNoPTR
-```
-
-- 无符号十进制整数（`%u`）。
-
-```c
-#define SCNu8        "hhu"
-#define SCNu16       "hu"
-#define SCNu32       "u"
-#define SCNu64       "llu"
-
-#define SCNuLEASTN   SCNuN
-#define SCNuFASTN    SCNuN
-
-#define SCNuMAX      SCNu64
-#define SCNuPTR
-```
-
-- 无符号十六进制整数（`%x`）。
-
-```c
-#define SCNx8        "hhx"
-#define SCNx16       "hx"
-#define SCNx32       "x"
-#define SCNx64       "llx"
-
-#define SCNxLEASTN   SCNxN
-#define SCNxFASTN    SCNxN
-
-#define SCNxMAX      SCNu64
-#define SCNxPTR
 ```
 
 ---
@@ -304,8 +133,7 @@ Unsigned Integers >>>
 intmax_t imaxabs(intmax_t j); 
 ```
 
-- 计算整数 `j` 的绝对值。
-
+`imaxabs` 函数计算整数 `j` 的绝对值。如果结果无法表示，则行为未定义。
 
 >---
 
@@ -315,12 +143,11 @@ intmax_t imaxabs(intmax_t j);
 imaxdiv_t imaxdiv(intmax_t numer, intmax_t denom);
 ```
 
-- `imaxdiv` 在一次操作中计算 `numer / denom` 和 `numer % denom`。
+`imaxdiv` 函数在一次操作中计算 `numer / denom` 和 `numer % denom`。函数返回一个 `imaxdiv_t` 类型的结构体，结构体包含商和余数，它们的类型都是 `intmax_t`。
 
 ```c
 #include <stdio.h>
 #include <inttypes.h>
-
 
 int main()
 {
@@ -340,29 +167,17 @@ int main()
 */
 ```
 
----
-### Functions：数字字符转换函数拓展
-
+>---
 #### strtoimax、wcstoimax （将字符串转换为最大有符号整数）
 
-- 函数转换字符串为数值的过程中，如果不能执行转换，返回零。如果正确值在可表示的值范围之外，则返回该函数返回类型的极值（`INTMAX_MAX` or `INTMAX_MIN`），且设置 `errno` 为 `ERANGE`。
-
 ```c
-intmax_t strtoimax(
-    const char * restrict nptr, 
-    char ** restrict endptr, 
-    int base
-    );
-
-intmax_t wcstoimax(
-    const wchar_t * restrict nptr,
-    wchar_t ** restrict endptr,
-    int base
-    );
+intmax_t strtoimax(const char * restrict nptr, char ** restrict endptr, int base);
+intmax_t wcstoimax(const wchar_t * restrict nptr, wchar_t ** restrict endptr, int base);
 ```
 
-- `strtoimax` 等价于 `strtol`、`strtoll` 函数。
-- `wcstoimax` 等价于 `wcstol`、`wcstoll` 函数。
+`strtoimax` 函数等效于 `strtol`、`strtoll` 函数。`wcstoimax` 函数等效于 `wcstol`、`wcstoll` 函数。
+
+函数转换字符串为数值的过程中，如果不能执行转换，返回零。如果正确值在可表示的值范围之外，则返回该函数返回类型的极值（`INTMAX_MAX` or `INTMAX_MIN`），并且设置 `errno` 为 `ERANGE`。
 
 ```c
 #include <stdio.h>
@@ -412,23 +227,14 @@ errno = Result too large
 
 #### strtoumax、wcstoumax （将字符串转换为最大无符号整数）
 
-- 函数转换字符串为数值的过程中，如果不能执行转换，返回零。如果正确值在可表示的值范围之外，则返回 `UINTMAX_MAX`，且设置 `errno` 为 `ERANGE`。
 
 ```c
-uintmax_t strtoumax(
-    const char * restrict nptr,
-    char ** restrict endptr,
-    int base
-    );
-
-uintmax_t wcstoumax(
-    const wchar_t * restrict nptr,
-    wchar_t ** restrict endptr,
-    int base
-    );
+uintmax_t strtoumax(const char * restrict nptr, char ** restrict endptr, int base);
+uintmax_t wcstoumax(const wchar_t * restrict nptr, wchar_t ** restrict endptr, int base);
 ```
 
-- `strtoumax` 等价于 `strtoul`、`strtoull` 函数。
-- `wcstoumax` 等价于 `wcstoul`、`wcstoull` 函数。
+`strtoumax` 函数等效于 `strtoul`、`strtoull` 函数。`wcstoumax` 等效于 `wcstoul`、`wcstoull` 函数。
+
+函数转换字符串为数值的过程中，如果不能执行转换，返回零。如果正确值在可表示的值范围之外，则返回 `UINTMAX_MAX`，并且设置 `errno` 为 `ERANGE`。
 
 ---
