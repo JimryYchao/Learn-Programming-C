@@ -1,37 +1,33 @@
-#include <ctype.h>
 #include <stdio.h>
-#include <errno.h>
-#include <fenv.h>
-#include <setjmp.h>
-#define __STDC_WANT_IEC_60559_TYPES_EXT__
+#include <stdlib.h>
+#include <signal.h>
 
-#include <float.h>
-
-typedef int (*pCtypeFun)(int);
-void Test_CtypeFun(pCtypeFun, const char *);
-void Test_CtypeFun(pCtypeFun pFun, const char *name)
+void signal_handler(int signal)
 {
-
-jmp_buf
-    printf("Test Function [%s] : \n", name);
-    int index = 0;
-    while (index < 128) // ASCII 0~127
-    {
-        if (pFun((char)index))
-        {
-            printf("    [%03d]", index);
-            if (isgraph(index))
-                printf("%c,\n", index);
-            else
-                printf("%#.3x,\n", index);
-        }
-        index++;
-    }
-    printf("\n");
-    
+    printf("Received signal %d\n", signal);
 }
-//--------------------------------------------------------
-int main()
+
+int Raise(int sig)
 {
-    Test_CtypeFun(isblank, "isblank");
+    printf("Sending signal %d\n", sig);
+    return raise(sig);
+}
+
+int main(void)
+{
+    /* 安装信号处理函数。 */
+    if (signal(SIGBREAK, signal_handler) == SIG_ERR)
+    {
+        printf("Error while installing a signal handler.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (Raise(SIGINT) != 0)
+    {
+        printf("Error while raising the SIGTERM signal.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Exit main()\n");
+    return EXIT_SUCCESS;
 }
