@@ -24,10 +24,10 @@
 - [x] <stdio.h>
 - [x] <stdlib.h>
 - [x] <stdnoreturn.h>
-- [ ] <string.h>
+- [x] <string.h>
 - [ ] <tgmath.h>
 - [ ] <threads.h>
-- [ ] <time.h>
-- [ ] <uchar.h>
+- [x] <time.h>
+- [x] <uchar.h>
 - [ ] <wchar.h>
 - [ ] <wctype.h>
