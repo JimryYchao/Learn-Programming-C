@@ -268,10 +268,6 @@ size_t mbrtoc8(char8_t * restrict pc8, const char * restrict s, size_t n, mbstat
 
 `mbrtoc8` 是类似于 `mbrtoc16` 的多字节转换宽字节的 UTF-8 位版本。参考 `mbrtoc16` 的函数描述。
 
-```c
-
-```
-
 > `c32rtomb` 
 
 ```c

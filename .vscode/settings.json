@@ -75,7 +75,8 @@
 		"cstddef": "c",
 		"memory": "c",
 		"random": "c",
-		"uchar.h": "c"
+		"uchar.h": "c",
+		"wchar.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

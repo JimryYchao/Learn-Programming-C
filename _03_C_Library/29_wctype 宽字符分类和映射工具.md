@@ -1,14 +1,16 @@
 ## C 宽字符分类和映射工具（Wide character classification and mapping utilities）：wctype.h
 
-`wctype.h` 提供有关宽字符分类和字符映射的函数和类型。
+`wctype.h` 提供有关宽字符分类和字符映射的函数和类型。这些函数的行为收到当前区域设置的 `LC_CTYPE` 类别的影响。
+
+对于下面描述的接受 `wint_t` 类型参数的所有函数，其值应可表示为 `wchar_t` 或应等于宏 `WEOF` 的值。如果此参数具有任何其他值，则行为未定义。
 
 ---
 ### Types and Macro
 
 ```c
 typedef unsigned short    wint_t;    // 保存与扩展字符集成员相对应的任何值
-typedef unsigned short    wctype_t;  // 保存表示特定于语言环境的字符分类的值
-typedef wchar_t           wctrans_t; // 保存表示特定于语言环境的字符映射的值
+typedef unsigned short    wctype_t;  // 保存表示特定于区域设置的字符分类的值
+typedef wchar_t           wctrans_t; // 保存表示特定于区域设置的字符映射的值
 
 #define WEOF    ((wint_t)(0xFFFF))
 ```
@@ -17,7 +19,7 @@ typedef wchar_t           wctrans_t; // 保存表示特定于语言环境的字�
 ### Functions：宽字符分类函数（Wide character classification utilities）
 #### 宽字符分类函数
 
-- 参考 `ctype.h` 中的字符分类函数，以下提供对应的宽字符版本。
+参考 `ctype.h` 中的字符分类函数，以下提供对应的宽字符版本。
 
 ```c
 int iswalnum(wint_t wc);            // isalnum  是否为字母或数字
@@ -34,9 +36,9 @@ int iswupper(wint_t wc);            // isupper  是否为大写字母
 int iswxdigit(wint_t wc);           // isxdigit  是否为十六进制数字字符
 ```
 
-<br>
+>---
 
-#### wctype、iswctype（区域设置特定字符分类）
+#### wctype、iswctype（可扩展的宽字符分类函数）
 
 > `wctype`
 
@@ -44,9 +46,9 @@ int iswxdigit(wint_t wc);           // isxdigit  是否为十六进制数字字�
 wctype_t wctype(const char *property);          // 构造本地环境的宽字符类别分类
 ```
 
-- `wctype` 用于构造 `wctype_t` 类型值，它描述为宽字符分类函数使用的 `LC_CTYPE` 类别。如果当前 C 环境不能支持构造 `property` 描述的特定字符分类时，返回 0。
+`wctype` 用于构造 `wctype_t` 类型值，它描述为当前区域设置的宽字符分类函数使用的 `LC_CTYPE` 类别，该值可以作为 `iswctype` 函数的第二个参数。如果当前 C 的语言环境不能支持构造 `property` 描述的特定字符分类时，返回 0。
 
-* `property` 的以下值在所有 C 本地环境中得到支持
+`property` 的以下值在所有 C 本地环境中得到支持
 
 ```c
 "alnum"	        // 标识 iswalnum 所用的类别
@@ -68,7 +70,9 @@ wctype_t wctype(const char *property);          // 构造本地环境的宽字�
 int iswctype(wint_t wc, wctype_t desc);         // 检查字符是否符合本地环境下的指定宽字符分类
 ```
 
-* `iswctype` 使用 `desc` 所标识的区域特定字符分类，检查宽字符 `wc` 是否符合 `desc` 描述的分类。当且仅当宽字符 `wc` 的值为 `desc` 描述的属性时，`iswctype` 函数返回非零。如果 `desc`为零，`iswctype` 函数返回零。
+`iswctype` 使用 `desc` 所标识的区域特定字符分类，检查宽字符 `wc` 是否符合 `desc` 描述的分类。`LC_CTYPE` 类别的当前设置应与调用返回 `desc` 的 `wctype` 时的设置相同。
+
+当且仅当宽字符 `wc` 的值为 `desc` 描述的属性时，`iswctype` 函数返回非零。如果 `desc`为零，`iswctype` 函数返回零。
 
 ```c
 #define _CRT_SECURE_NO_WARNINGS 0 // 0
@@ -108,9 +112,9 @@ wint_t towlower( wint_t wc );       // islower  若可能则转换给定宽字�
 wint_t towupper( wint_t wc );       // isupper  若可能则转换给定宽字符为大写
 ```
 
-<br>
+>---
 
-#### wctrans、towctrans （区域设置特定字符映射）
+#### wctrans、towctrans （可扩展的宽字符大小写映射函数）
 
 > `wctrans`
 
@@ -118,9 +122,9 @@ wint_t towupper( wint_t wc );       // isupper  若可能则转换给定宽字�
 wctrans_t wctrans(const char* property);     
 ```
 
-- `wctrans` 构造 `wctrans_t` 类型值，它描述宽字符映射的 `LC_CTYPE` 类别。如果当前 C 环境不能支持构造 `property` 描述的特定字符映射时，返回 0。
+`wctrans` 构造 `wctrans_t` 类型值，它描述当前区域设置的宽字符映射函数使用的 `LC_CTYPE` 类别，该值可以作为 `towctrans` 函数的第二个参数。如果当前 C 的语言环境不能支持构造 `property` 描述的特定字符映射时，返回 0。
 
-* `property` 的以下值在所有 C 本地环境中得到支持
+`property` 的以下值在所有 C 本地环境中得到支持：
 
 ```c
 "toupper"	        // 标识 towupper 所用的映射
@@ -133,6 +137,10 @@ wctrans_t wctrans(const char* property);
 wint_t towctrans(wint_t wc, wctrans_t desc);
 ```
 
-* `towctrans` 使用 `desc` 所标识的区域特定字符映射，尝试转换宽字符 `wc` 是否符合 `desc` 描述的映射。可以转换时返回对应的字符映射，否则返回未转换的 `wc`。
+`towctrans` 函数使用 `desc` 描述的映射返回 `wc` 的映射值。如果 `desc` 为零，则 `towctrans` 函数返回 `wc` 的值。
+
+```c
+
+```
 
 ---
