@@ -20,9 +20,9 @@
 - [x] <stdbool.h>
 - [ ] <stdckdint.h>
 - [x] <stddef.h>
-- [ ] <stdint.h>
+- [x] <stdint.h>
 - [x] <stdio.h>
-- [ ] <stdlib.h>
+- [x] <stdlib.h>
 - [x] <stdnoreturn.h>
 - [ ] <string.h>
 - [ ] <tgmath.h>
