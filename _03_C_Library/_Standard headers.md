@@ -21,9 +21,9 @@
 - [ ] <stdckdint.h>
 - [x] <stddef.h>
 - [ ] <stdint.h>
-- [ ] <stdio.h>
+- [x] <stdio.h>
 - [ ] <stdlib.h>
-- [ ] <stdnoreturn.h>
+- [x] <stdnoreturn.h>
 - [ ] <string.h>
 - [ ] <tgmath.h>
 - [ ] <threads.h>
