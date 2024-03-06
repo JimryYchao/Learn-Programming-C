@@ -29,5 +29,5 @@
 - [ ] <threads.h>
 - [x] <time.h>
 - [x] <uchar.h>
-- [ ] <wchar.h>
+- [x] <wchar.h>
 - [ ] <wctype.h>
