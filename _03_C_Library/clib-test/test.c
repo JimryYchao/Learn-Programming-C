@@ -5,6 +5,7 @@
 #include <math.h>
 
 #include <float.h>
+#include <complex.h>
 
 
 #ifdef __STDC_WANT_IEC_60559_DFP__
@@ -23,7 +24,6 @@ typedef _Decimal64_t _Decimal128;
 #endif
 int main(void)
 {
-    
     // C 本地环境将为启用 UTF-8 的英文；
     // 小数点将为德文
     // 日期和时间格式将为日文
