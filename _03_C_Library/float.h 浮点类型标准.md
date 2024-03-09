@@ -1,7 +1,7 @@
 ## C 浮点类型标准（Characteristics of floating types）：float.h
 
 ```c
-#define __STDC_VERSION_FLOAT_H__     202311L 
+#define __STDC_VERSION_FLOAT_H__        202311L 
 ```
 
 `float.h` 定义了一些有关实浮点类型（包括十进制浮点数，标准浮点数）的各种限制和参数的宏常量。头文件中的所有整数值（`FLT_ROUNDS` 除外）都应是适用于条件表达式包含预处理指令的常量表达式

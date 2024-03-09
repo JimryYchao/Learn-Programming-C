@@ -15,8 +15,9 @@
 #### 整数类型的宽度
 
 ```c
-#define BOOL_WIDTH      1     // bool    
 #define CHAR_BIT        8     // 非位域的最小对象的位数（字节）
+
+#define BOOL_WIDTH      1     // bool    
 
 #define UCHAR_WIDTH     CHAR_BIT        // unsigned char
 #define SCHAR_WIDTH     CHAR_BIT        // signed char 

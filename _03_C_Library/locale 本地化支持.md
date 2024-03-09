@@ -89,6 +89,8 @@ struct lconv
 
 #define LC_MIN          LC_ALL
 #define LC_MAX          LC_TIME
+
+#define NULL			((void *)0)
 ```
 
 这些宏扩展为具有不同值的常量表达式，一般作为 `setlocale` 函数的第一个参数。其他宏定义，以 `LC_` 开头，由实现定义指定。
