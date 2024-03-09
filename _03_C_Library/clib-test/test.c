@@ -3,12 +3,11 @@
 #include <float.h>
 #include <stdio.h>
 #include <stdatomic.h>
-
+#include <time.h>
 
 int main()
 {
-
-    atomic_flag
+    intptr_t
         printf("%LD", __DEC128_MAX__);
 }
 

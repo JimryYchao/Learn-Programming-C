@@ -81,7 +81,8 @@
 		"cstdint": "c",
 		"cinttypes": "c",
 		"sstream": "c",
-		"typeinfo": "c"
+		"typeinfo": "c",
+		"utility": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

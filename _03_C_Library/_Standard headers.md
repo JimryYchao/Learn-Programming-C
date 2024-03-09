@@ -18,7 +18,7 @@
 - [x] <stdatomic.h>
 - [ ] <stdbit.h>
 - [x] <stdbool.h>
-- [ ] <stdckdint.h>
+- [x] <stdckdint.h>
 - [x] <stddef.h>
 - [x] <stdint.h>
 - [x] <stdio.h>
@@ -26,7 +26,7 @@
 - [x] <stdnoreturn.h>
 - [x] <string.h>
 - [x] <tgmath.h>
-- [ ] <threads.h>
+- [x] <threads.h>
 - [x] <time.h>
 - [x] <uchar.h>
 - [x] <wchar.h>
