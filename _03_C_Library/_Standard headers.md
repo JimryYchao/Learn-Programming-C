@@ -16,7 +16,7 @@
 - [x] <stdalign.h>
 - [x] <stdarg.h>
 - [x] <stdatomic.h>
-- [ ] <stdbit.h>
+- [x] <stdbit.h>
 - [x] <stdbool.h>
 - [x] <stdckdint.h>
 - [x] <stddef.h>
