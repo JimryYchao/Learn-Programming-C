@@ -744,4 +744,30 @@ void encodedecd128(unsigned char encptr[restrict static 16], const _Decimal128 *
 void decodedecd128(_Decimal128 * restrict xptr, const unsigned char encptr[restrict static 16]);
 void encodebind128(unsigned char encptr[restrict static 16], const _Decimal128 * restrict xptr);
 void decodebind128(_Decimal128 * restrict xptr, const unsigned char encptr[restrict static 16]);
+
+#ifdef __STDC_WANT_IEC_60559_EXT__
+typedef _Decimal32          _Decimal32_t
+typedef _Decimal64          _Decimal64_t
+#define HUGE_VAL_D32
+#define HUGE_VAL_D64
+#define HUGE_VAL_D128
+
+int totalorderd32(const _Decimal32 *x, const _Decimal32 *y);
+int totalordermagd32(const _Decimal32 *x, const _Decimal32 *y);
+_Decimal32 getpayloadd32(const _Decimal32 *x);
+int setpayloadd32(_Decimal32 *res, _Decimal32 pl);
+int setpayloadsigd32(_Decimal32 *res, _Decimal32 pl);
+
+int totalorderd64(const _Decimal64 *x, const _Decimal64 *y);
+int totalordermagd64(const _Decimal64 *x, const _Decimal64 *y);
+_Decimal64 getpayloadd64(const _Decimal64 *x);
+int setpayloadd64(_Decimal64 *res, _Decimal64 pl);
+int setpayloadsigd64(_Decimal64 *res, _Decimal64 pl);
+
+int totalorderd128(const _Decimal128 *x, const _Decimal128 *y);
+int totalordermagd128(const _Decimal128 *x, const _Decimal128 *y);
+_Decimal128 getpayloadd128(const _Decimal128 *x);
+int setpayloadd128(_Decimal128 *res, _Decimal128 pl);
+int setpayloadsigd128(_Decimal128 *res, _Decimal128 pl);
+#endif
 #endif

@@ -1239,7 +1239,7 @@ ldexp(0.782211) : 0.782211 * 2^7 = 100.123000
 
 >---
 
-#### log、log10、log10p1、log1p、logp1、  log2、log1p （对数相关）
+#### log、log10、log10p1、log1p、logp1、log2、log1p （对数相关）
 
 ```c
 // 自然对数 ln(x)
@@ -2709,6 +2709,19 @@ bool samequantumd128(_Decimal128 x, _Decimal128 y);
 `samequantumd`*N* 函数检查 x 和 y 的量子指数是否相同。如果 x 和 y 都是 *NaN*，或者都是无穷大，它们有相同的量子指数；如果恰好有一个操作数是无穷大，或者恰好有一个操作数是 *NaN*，它们则没有相同的量子指数。`samequantumd`*N* 函数不会引发浮点异常。
 
 当 x 和 y 具有相同的量子指数时，函数返回非零，否则返回零。
+
+>---
+#### quantumd*N*
+
+```c
+#ifdef __STDC_IEC_60559_DFP__
+_Decimal32 quantumd32(_Decimal32 x);
+_Decimal64 quantumd64(_Decimal64 x);
+_Decimal128 quantumd128(_Decimal128 x);
+#endif
+```
+
+`quantumd`*N* 函数计算有限参数 x 的量子。如果 x 是无限的，则结果为 +∞。
 
 >---
 #### llquantexpd*N*

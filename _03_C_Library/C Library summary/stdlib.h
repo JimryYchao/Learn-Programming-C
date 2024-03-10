@@ -65,11 +65,28 @@ size_t mbstowcs(wchar_t * restrict pwcs, const char * restrict s, size_t n);
 size_t wcstombs(char * restrict s, const wchar_t * restrict pwcs, size_t n);
 size_t memalignment(const void *p);
 
-#ifdef
+#ifdef __STDC_IEC_60559_DFP__
 int strfromd32(char * restrict s, size_t n, const char * restrict format, _Decimal32 fp);
 int strfromd64(char * restrict s, size_t n, const char * restrict format, _Decimal64 fp);
 int strfromd128(char * restrict s, size_t n, const char * restrict format, _Decimal128 fp);
 _Decimal32 strtod32(const char * restrict nptr, char ** restrict endptr);
 _Decimal64 strtod64(const char * restrict nptr, char ** restrict endptr);
 _Decimal128 strtod128(const char * restrict nptr, char ** restrict endptr);
+#endif
+
+#define __STDC_LIB_EXT1__
+#ifdef (__STDC_LIB_EXT1__ && __STDC_WANT_LIB_EXT1__)
+typedef int     errno_t;
+typedef size_t  rsize_t;
+typedef int     constraint_handler_t;
+
+constraint_handler_t set_constraint_handler_s(constraint_handler_t handler);
+void abort_handler_s(const char * restrict msg, void * restrict ptr, errno_t error);
+void ignore_handler_s(const char * restrict msg, void * restrict ptr, errno_t error);
+errno_t getenv_s(size_t * restrict len, char * restrict value, rsize_t maxsize, const char * restrict name);
+QVoid *bsearch_s(const void *key, QVoid *base, rsize_t nmemb, rsize_t size, int (*compar)(const void *k, const void *y, void *context), void *context);
+errno_t qsort_s(void *base, rsize_t nmemb, rsize_t size, int (*compar)(const void *x, const void *y, void *context), void *context);
+errno_t wctomb_s(int * restrict status, char * restrict s, rsize_t smax, wchar_t wc);
+errno_t mbstowcs_s(size_t * restrict retval, wchar_t * restrict dst, rsize_t dstmax, const char * restrict src, rsize_t len);
+errno_t wcstombs_s(size_t * restrict retval, char * restrict dst, rsize_t dstmax, const wchar_t * restrict src, rsize_t len);
 #endif

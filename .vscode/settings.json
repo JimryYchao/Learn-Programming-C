@@ -82,7 +82,14 @@
 		"cinttypes": "c",
 		"sstream": "c",
 		"typeinfo": "c",
-		"utility": "c"
+		"utility": "c",
+		"bit": "c",
+		"concepts": "c",
+		"cstdio": "c",
+		"cwchar": "c",
+		"deque": "c",
+		"memory_resource": "c",
+		"initializer_list": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }
