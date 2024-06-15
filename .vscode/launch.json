@@ -5,14 +5,14 @@
             "name": "C/C++ Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\_Programme Environment_\\_C_Cpp_\\w64devkit\\bin\\gdb.exe", //按照位置自己改“\\的原因是\与转义符含义冲突，故采用/或\\”
+            "miDebuggerPath": "C:/_Programme Environment_/_C_Cpp_/w64devkit/bin/gdb.exe", 
             "setupCommands": [
                 {
                     "description": "为 gdb 启用整齐打印",

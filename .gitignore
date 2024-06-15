@@ -5,8 +5,9 @@
 *.tar
 *.xz
 *.tar.xz
-.img/*.pdf
 
 # C test scripts
 [Tt]estSrc/
 clib-test/
+
+[bB]ooks/

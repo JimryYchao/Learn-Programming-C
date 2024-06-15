@@ -91,5 +91,7 @@
 		"memory_resource": "c",
 		"initializer_list": "c"
 	},
-	"C_Cpp.errorSquiggles": "disabled"
+	"C_Cpp.errorSquiggles": "disabled",
+	"C_Cpp.intelliSenseEngineFallback": "enabled",
+	"C_Cpp.default.compilerPath": "C:\\_Programme Environment_\\_C_Cpp_\\w64devkit\\bin\\gcc.exe"
 }
