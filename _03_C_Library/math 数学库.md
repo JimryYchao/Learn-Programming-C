@@ -836,7 +836,7 @@ _Decimal128 atan2d128(_Decimal128 y, _Decimal128 x);
 
 四象限反正切函数用于确定点 $(x, y)$ 在直角坐标系的位置。
 
-![](.img/四象限反正切函数atan2(y,x)值域分布图.png)
+![](.img/atan2.dio.svg)
 
 定义 `nor` 为有限浮点数 (`FP_NORMAL`)，正有限表示为 `+nor`，负有限表示为 `-nor`：
   - 当 `x = 0, y = 0` 时，函数返回 `0.0`；

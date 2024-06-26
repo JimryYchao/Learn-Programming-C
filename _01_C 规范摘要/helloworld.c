@@ -1,6 +1,6 @@
 // helloworld.c
 #include <stdio.h>
-
-int main(void){
-	printf("Hello C!");
+int main(void)
+{
+	puts("Hello World!");
 }
