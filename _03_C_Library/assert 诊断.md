@@ -21,7 +21,7 @@ void assert(scalar-Expression); // scalar 表示表达式必须具有标量类�
 ```c
 #include <assert.h>
 assert(1 > 2); // Assertion failed!
-```
+``` 
 
 >---
 
