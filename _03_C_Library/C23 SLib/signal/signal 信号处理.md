@@ -1,4 +1,4 @@
-## C 信号处理（Signal handling）：signal.h
+## C 信号处理：signal.h
 
 `signal.h`[[↗]](signal_test.c) 用于处理各种信号（程序执行期间可能报告的条件）。
 
