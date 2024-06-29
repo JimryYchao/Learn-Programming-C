@@ -1,4 +1,4 @@
-## C 诊断（Diagnostics）：assert.h
+## C 诊断：assert.h
 
 断言库，在程序中关键的地方进行断言。
 
