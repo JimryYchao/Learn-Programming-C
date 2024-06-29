@@ -1,6 +1,7 @@
 ## C 字符处理：ctype.h
 
-字符处理库，`ctype.h` 声明了一些用于分类和映射字符的函数。在所有的情况下，所有的参数都是一个 `int`。这些函数的行为受当前区域设置的影响。
+
+`ctype.h`[[↗]](ctype_test.c) 声明了一些用于分类和映射字符的函数。在所有的情况下，所有的参数都是一个 `int`。这些函数的行为受当前区域设置的影响。
 
 >---
 ### 字符分类函数
@@ -28,7 +29,6 @@
 #include <ctype.h>
 #include <stdio.h>
 typedef int (*pCtypeFun)(int);
-void Test_CtypeFun(pCtypeFun, const char *);
 void Test_CtypeFun(pCtypeFun pFun, const char *name)
 {
     printf("Test Function [%s] : \n", name);

@@ -1,6 +1,6 @@
 ## C 错误报告（Errors）：errno.h
 
-`errno.h` 定义了几个有关错误条件的报告相关的宏。
+`errno.h`[[↗]](errno_test.c) 定义了几个有关错误条件的报告相关的宏。
 
 >---
 ### errno
@@ -44,18 +44,17 @@ void show_errno(void)
  
 int main(void)
 {
-    1.0/0.0;
-    show_errno();   // no error occurred
+    1.0 / 0.0;
+    show_errno(); // no error occurred
 
     acos(+1.1);
-    show_errno();  // domain error occurred
- 
+    show_errno(); // domain error occurred
+
     log(0.0);
-    show_errno();  // pole or range error occurred
-    
-    errno = 0; // reset errno
-    sin(0.0);
-    show_errno();  // no error occurred
+    perror("log(0.0)"); // log(0.0): Result too large
+
+    float a = sqrtf(-1);
+    printf(strerror(errno)); // Domain error
 }
 ```
 
