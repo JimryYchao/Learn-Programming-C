@@ -1,4 +1,4 @@
-## C 错误报告（Errors）：errno.h
+## C 错误报告：errno.h
 
 `errno.h`[[↗]](errno_test.c) 定义了几个有关错误条件的报告相关的宏。
 
