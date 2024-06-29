@@ -1,4 +1,4 @@
-## C 整数类型限制（Sizes of integer types）：limits.h
+## C 整数类型限制：limits.h
 
 `limits.h` 定义了一些宏，可以扩展为标准整数类型的各种限制和参数。这些宏适用于条件表达式包含预处理指令的常量表达式。
 
