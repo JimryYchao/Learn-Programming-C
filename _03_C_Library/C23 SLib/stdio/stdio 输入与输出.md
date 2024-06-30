@@ -400,11 +400,14 @@ Array read successfully, contents:
 >---
 ### 格式化输入与输出
 
-| Specifier                                  | Description                    |
-| :----------------------------------------- | :----------------------------- |
-| `printf`, `fprintf`, `sprintf`, `snprintf` | 格式化输出。                   |
-| `scanf`, `fscanf`, `sscanf`                | 格式化输入。                   |
-| `vscanf`, `vfscanf`, `vsscanf`             | 使用可变参数列表的格式化输入。 |
+| Specifier                                      | Description                    |
+| :--------------------------------------------- | :----------------------------- |
+| `printf`, `fprintf`, `sprintf`, `snprintf`     | 格式化输出。                   |
+| `vprintf`、`vfprintf`、`vsprintf`、`vsnprintf` | 使用可变参数列表的格式化输出   |
+| `scanf`, `fscanf`, `sscanf`                    | 格式化输入。                   |
+| `vscanf`, `vfscanf`, `vsscanf`                 | 使用可变参数列表的格式化输入。 |
+
+
 >---
 #### printf、fprintf、sprintf、snprintf
 
@@ -554,30 +557,10 @@ int main(){
 }
 ```
 
-> vprintf、vfprintf、vsprintf、vsnprintf （使用可变参数列表的格式化输出）
+>---
+#### vprintf、vfprintf、vsprintf、vsnprintf （使用可变参数列表的格式化输出）
 
-```c
-// vxxxx
-int vprintf(char const* const format, va_list arg);                        
-int vfprintf(FILE* const stream, char const* const format, va_list arg); 
-int vsprintf(char* const str, char const* const format, va_list arg); 
-int vsnprintf(char* const str, size_t const size, char const* const format, va_list arg);
-
-// vxxxx_s
-int vprintf_s(char const* const format, va_list arg);                        
-int vfprintf_s(FILE* const stream, char const* const format, va_list arg); 
-int vsprintf_s(char* const str, size_t const size, char const* const format, va_list arg); 
-int vsnprintf_s(char* const str, size_t const size, char const* const format, va_list arg);
-```
-
-`vfprintf` 函数等效于 `fprintf`；
-`vprintf` 函数等效于 `printf`；
-`vsprintf` 函数等效于 `sprintf`。
-`vsnprintf` 函数等效于 `snprintf`；
-
-可变参数列表由 `arg` 替换，`arg` 应该已经由 `va_start` 宏（以及可能的后续 `va_arg` 调用）初始化。`vfprintf` 函数不调用 `va_end` 宏。
-
-这些函数返回输出的字符数，如果发生输出或编码错误，则返回负值。
+`vfprintf` 函数等效于 `fprintf`；`vprintf` 函数等效于 `printf`；`vsprintf` 函数等效于 `sprintf`。`vsnprintf` 函数等效于 `snprintf`；可变参数列表由 `arg` 替换，`arg` 应该已经由 `va_start` 宏（以及可能的后续 `va_arg` 调用）初始化。`vfprintf` 函数不调用 `va_end` 宏。
 
 ```c
 // MSVC
@@ -744,9 +727,7 @@ int main(void)
 >---
 #### vscanf、vfscanf、vsscanf （使用可变参数列表的格式化输入）
 
-`vfscanf` 函数等效于 `fscanf`；`vscanf` 函数等效于 `scanf`；`vsscanf` 函数等效于 `sscanf`。
-
-可变参数列表由 `arg` 替换，`arg` 应该已经由 `va_start` 宏（以及可能的后续 `va_arg` 调用）初始化。`vfprintf` 函数不调用 `va_end` 宏。
+`vfscanf` 函数等效于 `fscanf`；`vscanf` 函数等效于 `scanf`；`vsscanf` 函数等效于 `sscanf`。可变参数列表由 `arg` 替换，`arg` 应该已经由 `va_start` 宏（以及可能的后续 `va_arg` 调用）初始化。`vfprintf` 函数不调用 `va_end` 宏。
 
 `vscanf` 与对应 `scanf` 输入函数不同的是，格式参数列表从 `va_list` 的位置加载数据。
 

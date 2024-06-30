@@ -1,43 +1,26 @@
-## C Unicode 字符工具（Unicode utilities）：uchar.h
-
-```c
-#define __STDC_VERSION_UCHAR_H__        202311L
-```
+## C Unicode 字符工具：uchar.h
 
 `uchar.h` 提供了多字节字符和 UTF-16、UTF-32 之间的转换函数。
 
----
-### Types
+>---
+### 多字节 / 宽字符转换
 
-```c
-typedef struct
-{ 
-    unsigned long _Wchar;
-    unsigned short _Byte;
-    unsigned short _State;
-} mbstate_t;            // 保存在多字节字符序列和宽字符序列之间转换所需的转换状态信息
+| Specifier            | Description                |
+| :------------------- | :------------------------- |
+| `char8_t`            | 用于表示 8 位的无符号整数  |
+| `char16_t`           | 用于表示 16 位的无符号整数 |
+| `char32_t`           | 用于表示 32 位的无符号整数 |
+`mbstate_t` | 保存在多字节字符序列和宽字符序列之间转换所需的转换状态信息
+| `mbrtoc16、c16rtomb` | 多字节与 UTF-16 相互转换   |
+| `mbrtoc32、c32rtomb` | 多字节与 UTF-32 相互转换   |
+| `mbrtoc8、c8rtomb`   | 多字节与 UTF-8 相互转换    |
 
-typedef unsigned long long    size_t    // 无符号整数类型，表示类型大小
-typedef unsigned char    char8_t;       // 用于表示 8 位的无符号整数
-typedef uint_least16_t   char16_t;      // 用于表示 16 位的无符号整数
-typedef uint_least32_t   char32_t;      // 用于表示 32 位的无符号整数
-```
-
----
-### Functions：多字节 / 宽字符转换（Restartable multibyte/wide character conversion functions）
 
 这些函数有一个参数 `ps`，类型为 `mbstate_t` 的指针，指向一个对象，该对象可以完全描述相关多字节字符序列的当前转换状态，函数会根据需要对其进行更改。如果 `ps` 是空指针，则每个函数都使用自己的内部指针。
 
 `char8_t`、`char16_t` 和 `char32_t` 对象以及这些对象的序列的编码分别为 UTF-8、UTF-16 和 UTF-32。
 
->---
-#### mbrtoc16、c16rtomb （UTF-16 宽字符 / 多字节转换）
-
-> `mbrtoc16`
-
-```c
-size_t mbrtoc16(char16_t * restrict pc16, const char * restrict s, size_t n, mbstate_t * restrict ps);
-```
+> mbrtoc16、c16rtomb
 
 `mbrtoc16` 函数将单个编码点的多字节字符表示转换为其 UTF-16 位的宽字符表示：
   - 当 `s` 不是空指针时，函数从 `s` 开始最多审查 `n` 个字节，以确定下个多字节字符所需的字节数。若 `s` 中的下个多字节字符完整且合法，则转换它为对应的 UTF-16 宽字符并保存在 `*pc16`。随后的调用将存储连续的宽字符，而不消耗任何额外的输入，直到所有的字符都存储完毕。若当遇到空宽字符时，则置 `*ps` 为初始转换状态。
@@ -101,12 +84,6 @@ into 6 UTF-16 code units: [ 0x7a 0xdf 0x6c34 0xd83c 0xdf4c 0 ]
 */
 ```
 
-> `c16rtomb`
-
-```c
-size_t c16rtomb(char * restrict s, char16_t c16, mbstate_t * restrict ps);
-```
-
 `c16rtomb` 函数将 UTF-16 位宽字符表示转换到其单个编码点的多字节窄字符表示：
   - 若 `s` 不是空指针且 `c16` 是合法的 16 位编码点，则函数确定存储该编码点所需的字节数（包含任何迁移序列，并考虑当前多字节转换状态 *ps），并存储多字节表示于 `s` 所指向的字符数组，若必要则更新 `*ps`。此函数最能写入 `MB_CUR_MAX` 个字节。
   - 若 `s` 是空指针，则调用等价于对于某内部缓冲区 `buf` 的 `c16rtomb(buf, u'\0', ps)`。
@@ -153,17 +130,7 @@ into 11 UTF-8 code units: [ 0x7a 0xc3 0x9f 0xe6 0xb0 0xb4 0xf0 0x9f 0x8d 0x8c 0 
 */
 ```
 
-<br>
-
-#### mbrtoc32、c32rtomb （UTF-32 宽字符 / 多字节转换）
-
-> `mbrtoc32`
-
-```c
-size_t mbrtoc32(char32_t restrict * pc32, const char * restrict s, size_t n, mbstate_t * restrict ps);
-```
-
-`mbrtoc32` 是类似于 `mbrtoc16` 的多字节转换宽字节的 UTF-32 位版本。参考 `mbrtoc16` 的函数描述。
+> mbrtoc32、c32rtomb
 
 ```c
 #define _CRT_SECURE_NO_WARNINGS 0 // 0
@@ -209,12 +176,6 @@ into 5 UTF-32 code units: [ 0x7a 0xdf 0x6c34 0x1f34c 0 ]
 */
 ```
 
-> `c32rtomb` 
-
-```c
-size_t c32rtomb(char * restrict s, char32_t c32, mbstate_t * restrict ps);
-```
-
 `c32rtomb` 是类似于 `c16rtomb` 的多字节转换宽字节的 UTF-32 位版本。参考 `c16rtomb` 的函数描述。
 
 ```c
@@ -256,24 +217,5 @@ Processing 5 UTF-32 code units: [ 0x7a 0xdf 0x6c34 0x1f34c 0 ]
 into 11 UTF-8 code units: [ 0x7a 0xc3 0x9f 0xe6 0xb0 0xb4 0xf0 0x9f 0x8d 0x8c 0 ]
 */
 ```
-
->---
-#### mbrtoc8、c8rtomb（UTF-8 宽字符 / 多字节转换）
-
-> `mbrtoc8`
-
-```c
-size_t mbrtoc8(char8_t * restrict pc8, const char * restrict s, size_t n, mbstate_t * restrict ps);
-```
-
-`mbrtoc8` 是类似于 `mbrtoc16` 的多字节转换宽字节的 UTF-8 位版本。参考 `mbrtoc16` 的函数描述。
-
-> `c32rtomb` 
-
-```c
-size_t c8rtomb(char * restrict s, char8_t c8, mbstate_t * restrict ps);
-```
-
-`c8rtomb` 是类似于 `c16rtomb` 的多字节转换宽字节的 UTF-8 位版本。参考 `c16rtomb` 的函数描述。
 
 ---
