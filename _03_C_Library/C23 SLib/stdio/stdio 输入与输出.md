@@ -75,66 +75,6 @@
 | `TMP_MAX`, `TMP_MAX_S`   | 表示可由 `tmpnam` 函数生成的唯一文件名的最大数目。                               |
 | `tmpfile`, `tmpfile_s`   | 创建临时文件。                                                                   |
 
-> remove 
-
-```c
-#define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-
-int main(void)
-{
-    FILE* fp = fopen("file1.txt", "w"); // 创建文件
-    if (!fp) { perror("file1.txt"); return 1; }
-    puts("Created file1.txt");
-    fclose(fp);
-
-    int rc = remove("file1.txt");
-    if (rc) { perror("remove"); return 1; }
-    puts("Removed file1.txt");
-
-    fp = fopen("file1.txt", "r"); // 错误：文件不存在
-    if (!fp) perror("Opening removed file failed");
-
-    rc = remove("file1.txt"); 	  // 错误：文件不存在
-    if (rc) perror("Double-remove failed");
-}
-/*
-Created file1.txt
-Removed file1.txt
-Opening removed file failed: No such file or directory
-Double-remove failed: No such file or directory
-*/
-```
-
-> rename 
-
-```c
-#define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-
-int main(void)
-{
-	//------------可选注释----------
-	int rc = remove("to.txt");			
-	if (rc) { perror("remove"); }
-	//-----------------------------
-
-	FILE* fp = fopen("from.txt", "w"); // 创建文件 "from.txt"
-	if (!fp) { perror("from.txt"); return 1; }
-	fprintf(fp, "hello world"); // 写入到 "from.txt"
-	fclose(fp);
-
-	rc = rename("from.txt", "to.txt");      // 重命名
-	if (rc) { perror("rename"); return 1; }
-
-	fp = fopen("to.txt", "r");
-	if (!fp) { perror("to.txt"); return 1; }
-	char buf[70];
-	printf("%s\n", fgets(buf, sizeof buf, fp)); // 从 "to.txt" 读取
-	fclose(fp);
-}
-```
-
 > tmpfile、tmpfile_s 
 
 `tmpfile` 函数创建并打开一个临时二进制文件，该文件不同于任何其他现有文件，在关闭或程序终止时将自动删除该文件。打开的文件以 `"wb+"` 模式进行更新。函数返回一个指向它所创建的文件流的指针。如果无法创建文件，则 `tmpfile` 函数返回空指针。
@@ -144,7 +84,7 @@ int main(void)
 ```c
 #include <stdio.h>
 
-int main(void)
+void test_tmpfile()
 {
     FILE* stream;
     char tempstring[] = "String to be written";
@@ -156,9 +96,10 @@ int main(void)
     {
         err = tmpfile_s(&stream);
         if (err)
-            perror("Could not open new temporary file\n");
-        else
-            printf("Temporary file %d was created\n", i);
+            perror("Could not create or open new temporary file\n");
+        else {
+            printf("Temporary file %d was created and opened\n", i);
+        }
     }
     // Remove temporary files.
     printf("%d temporary files deleted\n", _rmtmp());
@@ -174,35 +115,35 @@ int main(void)
 如果无法生成合适的字符串，则 `tmpnam` 函数返回空指针。否则，如果参数是空指针，则 `tmpnam` 函数将其结果保留在内部静态对象中，并返回指向该对象的指针（随后调用 `tmpnam` 函数可能会修改同一对象）。如果参数 `s` 不是空指针，则假定它指向一个至少包含 `L_tmpnam` 个 `char` 元素的数组；`tmpnam` 函数将其结果写入该数组，并将参数作为其值返回。
 
 ```c
-#define _CRT_SECURE_NO_WARNINGS 1 // 0
-
 #include <stdio.h>
 #include <string.h>
 
-int main(void)
+void test_tmpnam_s()
 {
-#if _CRT_SECURE_NO_WARNINGS
-	char* name1 = tmpnam(NULL);  // 返回静态缓冲区的指针
-	printf("temporary file name: %s\n", name1);
-
-	char name2[L_tmpnam];
-	if (tmpnam(name2))
-		printf("temporary file name: %s\n", name2);
-	if (name1)
-		remove(name1);
-	remove(name2);
-#else
-	char name3[L_tmpnam_s];
-	errno_t err;
-
-	err = tmpnam_s(name3, sizeof name3);
-	if (err)
+	char tmpname[L_tmpnam_s];
+	if (tmpnam_s(tmpname, sizeof tmpname)) {
 		perror("Could not open new temporary file\n");
+        return;
+    }
 	else
-		printf("temporary file name: %s\n", name3);
+		printf("temporary file tmpname: %s\n", tmpname);
 
-	remove(name3);
-#endif
+	FILE* fp = fopen(tmpname, "w"); // 创建文件 
+	if (!fp) { perror(tmpname); return; }
+	fprintf(fp, "hello world");     // 写入到 "tmp"
+	fclose(fp);
+
+	int rc = rename(tmpname, "newName");        // 重命名
+	if (rc) { perror("rename"); return; }
+
+	fp = fopen("newName", "r");
+	if (!fp) { perror("fopen"); return; }
+	char buf[70];
+	printf("%s\n", fgets(buf, sizeof buf, fp)); // 从 "newName" 读取
+	fclose(fp);
+
+    if (remove("newName"))
+        perror("remove");
 }
 ```
 
@@ -325,25 +266,16 @@ int main(void)
 如果文件不存在或无法读取，则以读取模式（`mode` 参数中的第一个字符为 “`'r'`”）打开文件将失败。当打开时，当且仅当可以确定流不引用交互式设备时，流被完全缓冲。流的错误和文件结束指示符将被清除。
 
 ```c
-#define _CRT_SECURE_NO_WARNINGS 1 // 0
 #include <stdio.h>
-int main(void)
+void test_fopen()
 {
-	FILE* my_file;
-	errno_t err = 1;
-#define m_filename  "myfile.txt"
-
-#if _CRT_SECURE_NO_WARNINGS
-	if (my_file = fopen(m_filename, "a"))  // 追加写入
-		err = 0;
-#else
-	err = fopen_s(&my_file, m_filename, "a"); // 追加写入
-#endif
-	if (my_file && !err)
-	{
-		fprintf(my_file, "Hello world");
-		fclose(my_file);
-	}
+#define m_filename "myfile.txt"
+    FILE *my_file;
+    if (!fopen_s(&my_file, m_filename, "a")) // 追加写入
+    {
+        fprintf(my_file, "Hello world");
+        fclose(my_file);
+    }
     // 程序结束时会自动 fflush
 }
 ```
@@ -353,20 +285,25 @@ int main(void)
 如果 `filename` 为空指针，则函数尝试将流的模式更改为 `mode` 指定的模式，就像当前与流关联的文件已被使用一样。`freopen` 函数首先尝试关闭与指定流关联的任何文件。关闭文件失败时此函数将被忽略。流的错误和文件末尾指示符将被清除。
 
 ```c
-#define _CRT_SECURE_NO_WARNINGS 1 // 0
 #include <stdio.h>
-#include <stdlib.h>
  
-int main(void)
+void test_freopen()
 {
-    puts("stdout is printed to console");
-    if (freopen("redir.txt", "w", stdout) == NULL)
+#define m_filename "myfile.txt"
+    FILE *my_file;
+    if (!fopen_s(&my_file, m_filename, "a")) // 追加写入
+        fprintf(my_file, "Hello world");
+
+    if (!freopen(m_filename, "r", my_file))
     {
-       perror("freopen() failed");
-       return EXIT_FAILURE;
+        perror("freopen() failed");
+        return;
     }
-    puts("stdout is redirected to a file"); // 写入 redir.txt
-    fclose(stdout);
+    char buf[70] = {0};
+    fread(buf, sizeof(char), 69, my_file);
+    printf("%s", buf);
+    // 程序结束时会自动 fflush 并关闭
+    fclose(my_file);
 }
 ```
 
@@ -390,12 +327,6 @@ int main(void){
     char buf[BUFSIZ];
     setbuf(stdin, buf)
 }
-```
-
-> `setbuf`
-
-```c
-void setbuf(FILE * restrict stream, char * restrict buf);
 ```
 
 `setbuf` 设置用于流操作的内部缓冲区，其长度应该为 `BUFSIZ` 个字符。`stream` 表示要设置缓冲区的文件流，`buf` 表示指向文件流所用的缓冲区的指针（若 `buf` 为空时，表示关闭缓冲，`setbuf` 可用于禁用要求立即输出的流的缓冲）。
