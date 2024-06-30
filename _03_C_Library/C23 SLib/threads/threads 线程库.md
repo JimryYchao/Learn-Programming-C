@@ -1,105 +1,51 @@
 ## C 线程库（Threads）：threads.h
 
-`threads.h` 包含 `time.h`，并声明了支持多个执行线程的类型、枚举常量、宏定义和函数。
+`threads.h` 包含 `time.h`，并声明了支持多个执行线程的类型、枚举常量、宏定义和函数。若定义了 `__STDC_NO_THREADS__` 则不提供该头文件。
 
-若定义了 `__STDC_NO_THREADS__` 则不提供该头文件。
+> types
 
----
-### Types
+|Specifier|Description|
+|:--|:--
+`cnd_t` | 保存条件变量的标识符。
+`thrd_t` | 保存线程的标识符。
+`tss_t` | 保存特定于线程的存储指针的标识符。
+`mtx_t` | 保存互斥锁的标识符。
+`tss_dtor_t` | 函数指针类型 `void(*)(void *)`，用于特定于线程的存储指针的析构函数。
+`thrd_start_t` | 函数指针类型 `int(*)(void *)`，用以传递给 `thrd_create` 创建一个新的线程。
+`once_flag` | 包含有供 `call_once` 使用的标志
 
-```c
-typedef __cnd_t     cnd_t;
-typedef __thrd_t    thrd_t;
-typedef __tss_t     tss_t;
-typedef __mtx_t     mtx_t;
-
-typedef void (*tss_dotr_t)(void *);
-typedef int  (*thrd_start_t)(void *);
-
-typedef __once_flag   once_flag;
-```
-
-`cnd_t` 是一个完整的对象类型，它用于保存条件变量的标识符。
-
-`thrd_t` 是一个完整的对象类型，用于保存线程的标识符。
-
-`tss_t` 是一个完整的对象类型，用于保存特定于线程的存储指针的标识符。
-
-`mtx_t` 是一个完整的对象类型，用于保存互斥锁的标识符。
-
-`tss_dtor_t` 是函数指针类型 `void(*)(void *)`，用于特定于线程的存储指针的析构函数。
-
-`thrd_start_t` 这是函数指针类型 `int(*)(void *)`，用以传递给 `thrd_create` 创建一个新的线程。
-
-`once_flag` 是一个完整的对象类型，其中包含有供 `call_once` 使用的标志。
+> enums
 
 ```c
 enum {
-    mtx_plain     = /* implementation */,
-    mtx_recursive = /* implementation */,
-    mtx_timed     = /* implementation */,
+    mtx_plain,      // 传递给 `mtx_init` 创建不支持超时的互斥对象。
+    mtx_recursive,  // 传递给 `mtx_init` 创建支持递给锁定的互斥对象。
+    mtx_timed,      // 传递给 `mtx_init` 创建支持超时的互斥对象。
 }
 
-```
-
-`mtx_plain` 传递给 `mtx_init` 创建不支持超时的互斥对象。
-
-`mtx_recursive` 传递给 `mtx_init` 创建支持递给锁定的互斥对象。
-
-`mtx_timed` 传递给 `mtx_init` 创建支持超时的互斥对象。
-
-```c
 enum{
-    thrd_success  = /* implementation */,
-    thrd_nomen    = /* implementation */,
-    thrd_timedout = /* implementation */,
-    thrd_busy     = /* implementation */,
-    thrd_error    = /* implementation */,
+    thrd_success,   // 指示请求的操作成功。
+    thrd_nomen,     // 指示请求的操作失败，因为它无法分配内存。
+    thrd_timedout,  // 由定时等待函数返回，以指示在未获取请求的资源的情况下已达到调用中指定的时间。
+    thrd_busy,      // 指示请求的操作失败，因为测试和返回函数请求的资源已在使用中。
+    thrd_error,     // 指示请求的操作失败。
 }
 ```
-
-`thrd_success` 由函数返回，以指示请求的操作成功。
-
-`thrd_nomen` 由函数返回，以指示请求的操作失败，因为它无法分配内存。
-
-`thrd_timedout` 由定时等待函数返回，以指示在未获取请求的资源的情况下已达到调用中指定的时间。
-
-`thrd_busy` 由函数返回，以指示请求的操作失败，因为测试和返回函数请求的资源已在使用中。
-
-`thrd_error` 由函数返回，以指示请求的操作失败。
-
----
-### Macros
-
-#### ONCE_FLAG_INIT
-
-```c
-#define ONCE_FLAG_INIT    (once_flag){ 0 }
-```
-
-`ONCE_FLAG_INIT` 扩展为可用于初始化类型为 `once_flag` 的对象的值。
 
 >---
-#### TSS_DTOR_ITERATIONS
-
-```c
-#define TSS_DTOR_ITERATIONS     /* implementation */
-```
-
-`TSS_DTOR_ITERATIONS` 扩展为一个整数常量表达式，表示线程终止时将调用析构函数的最大次数。
-
----
 ### Functions
-
 #### call_once （初始化函数）
 
 ```c
+#define ONCE_FLAG_INIT
 void call_once(once_flag *flag, void (*func)(void));
 ```
 
 `call_once` 函数使用 `flag` 标志指向的 `once_flag` 来确保 `func` 只调用一次，即第一次使用该 `flag` 值调用 `call_once` 函数。完成对 `call_once` 函数的有效调用将与对具有相同 `flag` 值的 `call_once` 函数的所有后续调用同步。
 
----
+`ONCE_FLAG_INIT` 扩展为可用于初始化类型为 `once_flag` 的对象的值。
+
+>---
 #### 条件变量函数：cnd_init、cnd_broadcast、cnd_signal、cnd_wait、cnd_timedwait、cnd_destroy
 
 ```c
@@ -165,6 +111,8 @@ int thrd_sleep(const struct timespec *duration, struct timespec *remaining);
 void thrd_yield(void);
 ```
 
+`TSS_DTOR_ITERATIONS` 扩展为一个整数常量表达式，表示线程终止时将调用析构函数的最大次数。
+
 `thrd_create` 函数创建一个执行 `func(arg)` 的新线程。如果 `thrd_create` 函数成功，它会将 `thr` 指向的对象设置为新创建的线程的标识符。一旦原始线程退出并分离或加入到另一个线程，线程的标识符可以重新用于其他线程。`thrd_create` 函数的完成与新线程的开始执行同步。从 `func` 返回的行为与使用从 `func` 返回的值调用 `thrd_exit` 的行为相同。函数在成功时返回 `thrd_success`，如果无法为请求的线程分配内存，则返回 `thrd_nomem`，如果无法满足请求，则返回 `thrd_error`。
 
 `thrd_current` 函数标识调用它的线程。函数返回调用它的线程的标识符。
@@ -185,6 +133,7 @@ void thrd_yield(void);
 #### 特定于线程的存储函数：tss_create、tss_delete、tss_get、tss_set
 
 ```c
+#define TSS_DTOR_ITERATIONS     /* implementation */
 int tss_create(tss_t *key, tss_dtor_t dtor);
 void tss_delete(tss_t key);
 void *tss_get(tss_t key);
