@@ -1,4 +1,4 @@
-## C 原子操作：stdatomic.h (待定)
+## C 原子操作：stdatomic.h
 
 `stdatomic.h` 提供原子操作、互斥、条件变量的内建支持。
 
