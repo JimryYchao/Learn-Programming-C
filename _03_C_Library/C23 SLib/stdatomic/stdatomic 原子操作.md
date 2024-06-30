@@ -1,8 +1,4 @@
-## C 原子操作（Atomics）：stdatomic.h (待定)
-
-```c
-#define __STDC_VERSION_STDATOMIC_H__        202311L
-```
+## C 原子操作：stdatomic.h (待定)
 
 `stdatomic.h` 提供原子操作、互斥、条件变量的内建支持。
 
@@ -14,10 +10,8 @@
 - *M* 是指算数运算的其他参数的类型。对于原子整数类型，*M* 是 *C*；对于原子指针类型，*M* 是 `ptrdiff_t`。
 - 不以 `_explicit` 结尾的函数与相应的带有 `memory_order_seq_cst` 参数的 `_explicit` 函数具有相同语义的。
 
----
-### Macros
-
-#### 原子无锁宏（atomic lock-free macros）
+>---
+### 原子无锁宏
 
 ```c
 #define ATOMIC_BOOL_LOCK_FREE     
@@ -39,37 +33,7 @@
   - `2`：该原子类型始终免锁
 
 >---
-
-#### ATOMIC_FLAG_INIT
-
-```c
-#define ATOMIC_FLAG_INIT    
-```
-
-宏 `ATOMIC_FLAG_INIT` 扩展为 `atomic_flag` 类型对象的初始化设定项。
-
----
-### Types
-#### memory_order
-
-```c
-enum memory_order;
-```
-
-`memory_order` 是一种枚举类型，其枚举项标识内存排序约束。
-
->---
-#### atomic_flag
-
-```c
-struct atomic_flag;
-```
-
-`atomic_flag` 是一种结构类型，表示无锁的原始原子标志。`atomic_flag` 不提供加载或存储操作。
-
-
----
-### 初始化
+### 原子初始化
 
 具有未初始化的自动存储持续时间的原子对象或具有分配存储持续时间的此类对象最初具有不确定的表示形式；同样，对表示的任何字节的非原子存储（直接存储或例如，通过调用 `memcpy` 或 `memset`）使任何原子对象具有不确定的表示。对于具有静态或线程存储持续时间且不具有类型 `atomic_flag` 的原子对象的显式或默认初始化，可以保证生成有效状态。
 
@@ -83,17 +47,6 @@ static _Atomic(void*) head;
 ```
 
 >---
-#### atomic_init
-
-```c
-void atomic_init(volatile A *obj, C value);
-```
-
-`atomic_init` 泛型函数将 `obj` 指向的原子对象初始化为 `value` 的值，同时还初始化实现可能需要为原子对象携带的任何附加状态。如果对象没有声明的类型，调用后的有效类型为原子类型 `A`。
-
-尽管此函数初始化原子对象，但它不能避免数据争用；对正在初始化的对象的并发访问，即使通过原子操作，也构成数据争用。如果信号不是由于调用 `abort` 或 `raise` 函数的结果而发生的，则在信号处理程序调用 `atomic_init` 泛型函数时，该行为是未定义的。
-
----
 ### 多线程执行和数据竞争
 
 在没有定义 `__STDC_NO_THREADS__` 宏的宿主环境中，程序可以并发运行多个执行线程（或线程）。每个线程的执行按照以下所定义的方式进行。整个程序的执行包括其所有线程的执行。在独立实现中，程序是否可以有多个执行线程是由实现定义的。
@@ -156,7 +109,7 @@ void atomic_init(volatile A *obj, C value);
 
 如果程序在不同的线程中包含两个冲突的操作，其中至少有一个不是原子的，并且都没有先于另一个发生，则程序的执行包含数据争用。任何此类数据争用都会导致未定义的行为。
 
----
+>---
 ### 顺序与一致性
 
 
@@ -221,10 +174,10 @@ typedef enum{
 
 `kill_dependency` 宏终止依赖关系链；该参数不附带对返回值的依赖。宏返回 `y` 的值。
 
----
+>---
 ### Fences（屏障）
 
-本节引入了 *fence* 屏障的同步原语，屏障可以有获取语义、释放语义、或两者都有。具有获取语义的屏障称为 *获取屏障*；具有释放语义的屏障称为 *释放屏障*。
+屏障可以有获取语义、释放语义、或两者都有。具有获取语义的屏障称为 *获取屏障*；具有释放语义的屏障称为 *释放屏障*。
 
 对于释放屏障 *A* 与获取屏障 *B*，如果存在原子操作 *X* 和 *Y*，且两者都对某个原子对象 *M* 进行操作，并使得 *A* *sequenced before* *X*，*X* 修改 *M*，*Y* *sequenced before* *B* 且 *Y* 读取由 *X* 写入的值或由假定的释放序列 *X*（如果它是释放操作）中的任何副作用写入的值，则释放屏障 *A* 与获取屏障 *B* 同步。
 
@@ -257,7 +210,7 @@ void atomic_signal_fence(memory_order order);
 
 `atomic_signal_fence` 函数可用于指定线程执行的操作对信号处理程序可见的顺序。
 
----
+>---
 ### 无锁属性
 
 原子无锁宏指示整数和地址原子类型的无锁属性。值为 0 表示该类型永远不会无锁；值为 1 表示该类型有时是无锁的；值为 2 表示该类型始终是无锁的。
@@ -324,36 +277,18 @@ bool atomic_is_lock_free(const volatile A *obj);
 原子整数类型的表示形式不需要与相应的常规类型具有相同的大小，但应尽可能具有相同的大小，因为它可以减轻移植现有代码所需的工作量。
 
 ---
-### Generic Functions：原子类型的操作
+### 原子操作
 
-#### atomic_store
+| Specifier                  | Description                                                                                             |
+| :------------------------- | :------------------------------------------------------------------------------------------------------ |
+| `atomic_init`              | 将 `obj` 指向的原子对象初始化为 `value` 的值，同时还初始化实现可能需要为原子对象携带的任何附加状态。    |
+| `atomic_store`,            | 以原子方式存储 `object` 的值为 `desired`。                                                              |
+| `atomic_store_explicit`    | `order` 参数不能是 `memory_order_acquire`、`memory_order_consume` 或 `memory_order_acq_rel`。           |
+| `atomic_load`              | 以原子方式返回 `object` 指向的对象的值。                                                                |
+| `atomic_load_explicit`     | `order` 参数不能是 `memory_order_release` 或 `memory_order_acq_rel`。内存受到 `order` 值的影响。        |
+| `atomic_exchange`          | 以原子方式将 `object` 指向的值替换为 `desired` 的值。                                                   |
+| `atomic_exchange_explicit` | 操作是读-修改-写操作。内存受到 `order` 值的影响。函数以原子方式返回在副作用发生之前 `object` 指向的值。 |
 
-```c
-void atomic_store(volatile A *object, C desired);
-void atomic_store_explicit(volatile A *object, C desired, memory_order order);
-```
-
-泛型函数以原子方式将 `object` 指向的值替换为 `desired` 的值。`order` 参数不能是 `memory_order_acquire`、`memory_order_consume` 或 `memory_order_acq_rel`。内存受到 `order` 值的影响。
-
->---
-#### atomic_load
-
-```c
-C atomic_load(const volatile A *object);
-C atomic_load_explicit(const volatile A *object, memory_order order);
-```
-
-泛型函数以原子方式返回 `object` 指向的对象的值。`order` 参数不能是 `memory_order_release` 或 `memory_order_acq_rel`。内存受到 `order` 值的影响。
-
->---
-#### atomic_exchange
-
-```c
-C atomic_exchange(volatile A *object, C desired);
-C atomic_exchange_explicit(volatile A *object, C desired, memory_order order);
-```
-
-泛型函数以原子方式将 `object` 指向的值替换为 `desired` 的值。这些操作是读-修改-写操作。内存受到 `order` 值的影响。函数以原子方式返回在副作用发生之前 `object` 指向的值。
 
 >---
 #### atomic_compare_exchange
@@ -414,36 +349,23 @@ C atomic_fetch_key_explicit(volatile A *object, M operand, memory_order order);
 
 函数以原子方式返回操作之前 `object` 先前指向的值。
 
----
+>---
 
-### Functions：原子标志类型及操作
+### 原子标志类型及操作
 
-`atomic_flag` 类型提供经典的测试和设置功能，它有两种状态，设置或清除。对类型为 `atomic_flag` 的对象的操作应无锁。
+| Specifier                    | Description                                                                |
+| :--------------------------- | :------------------------------------------------------------------------- |
+| `atomic_flag`                | 一种结构类型，表示无锁的原始原子标志。`atomic_flag` 不提供加载或存储操作。 |
+| `ATOMIC_FLAG_INIT`           | 扩展为 `atomic_flag` 类型对象的初始化设定项。                              |
+| `atomic_flag_clear`          | 以原子方式将 `object` 指向的原子标志置于清除状态。                         |
+| `atomic_flag_clear_explicit` | `order` 参数不能是 `memory_order_acquire` 或 `memory_order_acq_rel`。      |
+`atomic_flag_test_and_set` | 以原子方式将 `object` 指向的原子标志置于设置状态。
+|`atomic_flag_test_and_set_explicit`|操作是原子读-修改-写操作，内存受 `order` 值的影响。|
 
-宏 `ATOMIC_FLAG_INIT` 可用于将 `atomic_flag` 初始化为清除状态。未使用 `ATOMIC_FLAG_INIT` 显式初始化的 `atomic_flag` 最初具有不确定的表示形式。
+`atomic_flag` 类型提供经典的测试和设置功能，它有两种状态，设置或清除。对类型为 `atomic_flag` 的对象的操作应无锁。宏 `ATOMIC_FLAG_INIT` 可用于将 `atomic_flag` 初始化为清除状态。未使用 `ATOMIC_FLAG_INIT` 显式初始化的 `atomic_flag` 最初具有不确定的表示形式。
 
 ```c
 atomic_flag guard = ATOMIC_FLAG_INIT;
 ```
 
->---
-#### atomic_flag_test_and_set
-
-```c
-bool atomic_flag_test_and_set(volatile atomic_flag *object);
-bool atomic_flag_test_and_set_explicit(volatile atomic_flag *object, memory_order order);
-```
-
-`atomic_flag_test_and_set` 以原子方式将 `object` 指向的原子标志置于设置状态。内存受 `order` 值的影响。这些操作是原子读-修改-写操作。
-
-`atomic_flag_test_and_set` 函数返回与效果之前原子标志状态相对应的值。返回值 `true` 对应于设置状态，返回值 `false` 对应于清除状态。
-
->---
-#### atomic_flag_clear
-
-```c
-void atomic_flag_clear(volatile atomic_flag *object);
-void atomic_flag_clear_explicit(volatile atomic_flag *object, memory_order order);
-```
-
-`order` 参数不能是 `memory_order_acquire` 或 `memory_order_acq_rel`。函数以原子方式将 `object` 指向的原子标志置于清除状态。内存受 `order` 值的影响。
+---
